@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Horvia</string>
+    <string name="home">home</string>
+    <string name="profil">profil</string>
+    <string name="search">search</string>
+    <string name="cart">cart</string>
+</resources>

@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Horvia</string>
+    <string name="home">accueil</string>
+    <string name="profil">profil</string>
+    <string name="search">recherche</string>
+    <string name="cart">panier</string>
+    <!-- Strings used for fragments for navigation -->
+
 </resources>

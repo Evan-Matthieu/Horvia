@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/homeActivity">
+
+    <activity
+        android:id="@+id/homeActivity"
+        android:name="com.horvia.horvia.ui.home.HomeActivity"
+        android:label="activity_home"
+        tools:layout="@layout/activity_home" />
+    <activity
+        android:id="@+id/cartActivity"
+        android:name="com.horvia.horvia.ui.cart.CartActivity"
+        android:label="activity_cart"
+        tools:layout="@layout/activity_cart" />
+    <activity
+        android:id="@+id/mainActivity"
+        android:name="com.horvia.horvia.MainActivity"
+        android:label="activity_main"
+        tools:layout="@layout/activity_main" />
+    <activity
+        android:id="@+id/profilActivity"
+        android:name="com.horvia.horvia.ui.profil.ProfilActivity"
+        android:label="activity_profil"
+        tools:layout="@layout/activity_profil" />
+    <activity
+        android:id="@+id/searchActivity"
+        android:name="com.horvia.horvia.ui.search.SearchActivity"
+        android:label="activity_search"
+        tools:layout="@layout/activity_search" />
+</navigation>
