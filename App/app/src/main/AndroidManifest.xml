@@ -13,18 +13,6 @@
         android:theme="@style/Theme.Horvia"
         tools:targetApi="31">
         <activity
-            android:name=".ui.home.HomeActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.search.SearchActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.profil.ProfilActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.cart.CartActivity"
-            android:exported="false" />
-        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
@@ -33,6 +21,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
     </application>
 
 </manifest>
