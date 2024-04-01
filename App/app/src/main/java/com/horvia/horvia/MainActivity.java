@@ -1,5 +1,6 @@
 package com.horvia.horvia;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -10,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.horvia.horvia.databinding.ActivityMainBinding;
 import com.horvia.horvia.ui.cart.CartFragment;
 import com.horvia.horvia.ui.home.HomeFragment;
+import com.horvia.horvia.ui.login.LoginActivity;
 import com.horvia.horvia.ui.profile.ProfileFragment;
 import com.horvia.horvia.ui.search.SearchFragment;
 
@@ -19,7 +21,10 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        checkUserCredentials();
+
         super.onCreate(savedInstanceState);
+
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
@@ -30,6 +35,18 @@ public class MainActivity extends AppCompatActivity {
         binding.bottomNavigationView.setOnItemSelectedListener(this::onItemSelected);
         binding.bottomNavigationView.setSelectedItemId(R.id.home_nav);
     }
+
+    private void checkUserCredentials(){
+        //TODO : Faire l'implémentation de la vérification si l'utilisateur est connecté ou non
+        boolean isUserLogged = false;
+        if(!isUserLogged){
+            Intent myIntent = new Intent(this, LoginActivity.class);
+            startActivity(myIntent);
+            finish();
+        }
+    }
+
+
 
     private boolean onItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();

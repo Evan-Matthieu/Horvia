@@ -1,0 +1,215 @@
+<ScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp"
+        android:paddingTop="100dp"
+        android:paddingBottom="50dp"
+        android:background="@color/primary"
+        tools:context=".ui.register.RegisterActivity">
+
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="200dp"
+            android:layout_height="90dp"
+            app:srcCompat="@drawable/app_logo" />
+
+        <TextView
+            android:id="@+id/type_register"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="@string/to_register"
+            android:textStyle="bold"
+            android:textSize="24sp"
+            android:textColor="@color/white"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:layout_gravity="start"
+            android:layout_marginTop="30dp"
+            android:layout_marginStart="5dp">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="@drawable/key"
+                android:contentDescription="Key Icon">
+
+            </ImageView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/your_login_informations"
+                android:layout_marginStart="10dp"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:textColor="@color/white"/>
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:hint="@string/email"
+            android:textColorHint="@color/grey"
+            android:background="@drawable/background_edittext"
+            android:inputType="text"/>
+
+        <EditText
+            android:id="@+id/password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:hint="@string/password"
+            android:textColorHint="@color/grey"
+            android:background="@drawable/background_edittext"
+            android:inputType="textPassword"
+            android:autofillHints="password"/>
+
+        <EditText
+            android:id="@+id/confirm_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:hint="@string/confirm_password"
+            android:textColorHint="@color/grey"
+            android:background="@drawable/background_edittext"
+            android:inputType="textPassword"
+            android:autofillHints="password"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:id="@+id/login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/to_login"
+                android:clickable="true"
+                android:focusable="true"
+                android:textColor="@color/white"
+                android:onClick="SwitchToLogin"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:layout_gravity="start"
+            android:layout_marginTop="30dp"
+            android:layout_marginStart="5dp">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="@drawable/user_fill"
+                android:contentDescription="User Icon"
+                android:backgroundTint="@color/white"
+                android:backgroundTintMode="src_atop">
+
+            </ImageView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/your_personnal_informations"
+                android:layout_marginStart="10dp"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:textColor="@color/white"/>
+        </LinearLayout>
+
+        <Spinner
+            android:id="@+id/civility"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/background_edittext"
+            android:hint="@string/civility"
+            android:inputType="text"
+            android:spinnerMode="dropdown"
+            android:textColorHint="@color/grey" />
+
+        <EditText
+            android:id="@+id/firstname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:hint="@string/firstname"
+            android:textColorHint="@color/grey"
+            android:background="@drawable/background_edittext"
+            android:inputType="textPersonName"
+            android:autofillHints="name"/>
+
+        <EditText
+            android:id="@+id/lastname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:hint="@string/lastname"
+            android:textColorHint="@color/grey"
+            android:background="@drawable/background_edittext"
+            android:inputType="textPersonName"
+            android:autofillHints="name"/>
+
+        <EditText
+            android:id="@+id/phone_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:hint="@string/phone_number"
+            android:textColorHint="@color/grey"
+            android:background="@drawable/background_edittext"
+            android:inputType="phone"
+            android:autofillHints="phone"/>
+
+        <DatePicker
+            android:id="@+id/birth_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:datePickerMode="spinner"
+            android:calendarViewShown="false"
+            android:hint="@string/birth_date"
+            android:textColorHint="@color/grey"
+            android:background="@drawable/background_edittext"
+            android:inputType="date"/>
+
+        <Button
+            android:id="@+id/register_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/secondary"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="50dp"
+            android:text="@string/to_register"
+            android:textAllCaps="false"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:onClick="OnSubmitRegister">
+        </Button>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</ScrollView>

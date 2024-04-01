@@ -5,4 +5,27 @@
     <string name="profile">profil</string>
     <string name="search">search</string>
     <string name="cart">cart</string>
+    <string name="to_login">login</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="password_forgot">Forgot your password ?</string>
+    <string name="to_register">Register</string>
+    <string name="login">Login</string>
+    <string name="your_login_informations">Your login informations</string>
+    <string name="your_personnal_informations">Your personnal informations</string>
+    <string name="confirm_password">Confirm your password</string>
+    <string name="civility">Civility</string>
+    <string name="phone_number">Phone number</string>
+    <string name="birth_date">Birth date</string>
+    <string name="firstname">Firstname</string>
+    <string name="lastname">Lastname</string>
+    <string name="mister">Mister</string>
+    <string name="madam">Madam</string>
+    <string name="miss">Miss</string>
+    <string name="other">Other</string>
+    <string name="required_field">Required field</string>
+    <string name="invalid_email">Invalid email</string>
+    <string name="invalid_phone_number">Invalid phone number</string>
+    <string name="password_should_be_same">Passwords entered do not match</string>
+    <string name="invalid_date">Invalid date</string>
 </resources>

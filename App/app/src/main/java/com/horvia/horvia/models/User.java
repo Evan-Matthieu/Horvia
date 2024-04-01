@@ -5,6 +5,9 @@ import java.util.Date;
 import java.util.Locale;
 
 public class User {
+    public User(){
+
+    }
 
     /* PRIMARY KEY */
     public int Id;
@@ -16,7 +19,7 @@ public class User {
     public String Lastname;
     public String FirstName;
     public String Email;
-    public String Phone;
+    public String PhoneNumber;
     public Role Role;
     public String Password;
     public Locale Language;

@@ -4,6 +4,31 @@
     <string name="profile">profil</string>
     <string name="search">recherche</string>
     <string name="cart">panier</string>
+    <string name="to_login">Se connecter</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="email">Email</string>
+    <string name="password">Mot de passe</string>
+    <string name="password_forgot">Mot de passe oublié ?</string>
+    <string name="to_register">S\'inscrire</string>
+    <string name="login">Connexion</string>
+    <string name="your_login_informations">Vos informations de connexion</string>
+    <string name="your_personnal_informations">Vos informations personnelles</string>
+    <string name="confirm_password">Confirmez votre mot de passe</string>
+    <string name="civility">Civilité</string>
+    <string name="firstname">Prénom</string>
+    <string name="lastname">Nom</string>
+    <string name="phone_number">Numéro de téléphone</string>
+    <string name="birth_date">Date de naissance</string>
+    <string name="mister">Monsieur</string>
+    <string name="madam">Madame</string>
+    <string name="miss">Mademoiselle</string>
+    <string name="other">Autre</string>
+    <string name="required_field">Ce champ est requis</string>
+    <string name="invalid_email">Email invalide</string>
+    <string name="invalid_phone_number">Numéro de téléphone invalide</string>
+    <string name="password_should_be_same">Les mots de passe saisis ne correspondent pas</string>
+    <string name="invalid_date">Date invalide</string>
+    <!-- TODO: Remove or change this placeholder text -->
     <!-- TODO: Remove or change this placeholder text -->
     <!-- Strings used for fragments for navigation -->
 
