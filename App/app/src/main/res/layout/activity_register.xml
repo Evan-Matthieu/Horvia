@@ -210,6 +210,20 @@
             android:textSize="18sp"
             android:onClick="OnSubmitRegister">
         </Button>
+        <TextView
+            android:id="@+id/errorCreateAccountTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:text="Error"
+            android:textColor="#FF0000"
+            android:gravity="center"
+            android:textSize="20dp"
+            android:layout_marginTop="15dp"
+            android:visibility="gone">
+
+        </TextView>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 </ScrollView>

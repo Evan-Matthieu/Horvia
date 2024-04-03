@@ -18,15 +18,26 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.horvia.horvia.R;
+import com.horvia.horvia.models.DatabaseManager;
 import com.horvia.horvia.models.User;
 import com.horvia.horvia.ui.login.LoginActivity;
 import com.horvia.horvia.models.Civility;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Pattern;
+import java.text.SimpleDateFormat;
 
 public class RegisterActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     private User user;
@@ -34,6 +45,13 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
     private Spinner spinCivility;
 
     private DatePicker dpBirthDate;
+    private TextView errorCreateAccountTextView;
+    private DatabaseManager databaseManager;
+
+    private String lastname,firstname,password,email,phone,civility;
+    private String birth;
+
+
 
 
     @Override
@@ -49,10 +67,13 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
         etLastname = findViewById(R.id.lastname);
         etPhoneNumber = findViewById(R.id.phone_number);
         dpBirthDate = findViewById(R.id.birth_date);
+        errorCreateAccountTextView = findViewById(R.id.errorCreateAccountTextView);
 
         spinCivility = findViewById(R.id.civility);
 
         SetCivilitySpinnerValues();
+
+        databaseManager = new DatabaseManager(getApplicationContext());
     }
 
     public void SwitchToLogin(View view) {
@@ -77,6 +98,7 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
     }
 
     public void OnSubmitRegister(View view){
+
         if(etEmail.length() == 0){
             etEmail.setError(this.getString(R.string.required_field));
         }
@@ -105,17 +127,19 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
             etPhoneNumber.setError(this.getString(R.string.invalid_phone_number));
         }
         else{
-            User user = new User();
-            user.Email = etEmail.getText().toString();
-            user.Password = etPassword.getText().toString();
-            user.Cility = Civility.values()[spinCivility.getSelectedItemPosition()];
-            user.FirstName = etFirstname.getText().toString();
-            user.Lastname = etLastname.getText().toString();
-            user.PhoneNumber = etPhoneNumber.getText().toString();
-            user.BirthDate = new Date(dpBirthDate.getYear(),dpBirthDate.getMonth(),dpBirthDate.getDayOfMonth());
 
+
+            email = etEmail.getText().toString();
+            password = etPassword.getText().toString();
+            civility = String.valueOf(Civility.values()[spinCivility.getSelectedItemPosition()]);
+            firstname = etFirstname.getText().toString();
+            lastname = etLastname.getText().toString();
+            phone = etPhoneNumber.getText().toString();
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            birth = formatter.format(new Date((dpBirthDate.getYear() - 1900),dpBirthDate.getMonth(),dpBirthDate.getDayOfMonth()));
             Toast.makeText(this,"Champs valides",Toast.LENGTH_LONG).show();
             // TODO: Faire l'enregistrement dans la base de données
+            createAccount();
         }
 
 
@@ -137,4 +161,55 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
         spinCivility.setAdapter(adapter);
     }
 
+    public void onApiResponse(JSONObject response) {
+        Boolean success = null;
+        String error = "";
+
+        try {
+            success = response.getBoolean("success");
+
+            if (success) {
+                Intent interfaceActivity = new Intent(this, LoginActivity.class);
+                interfaceActivity.putExtra("email", email);
+                startActivity(interfaceActivity);
+                finish();
+            } else {
+                error = response.getString("error");
+                errorCreateAccountTextView.setVisibility(View.VISIBLE);
+                errorCreateAccountTextView.setText(error);
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+            Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
+        }
+    }
+    public void createAccount() {
+
+
+        String url = "https://api-horvia.foxysnake.com/api/action/createAccount.php";
+
+        Map<String, String> params = new HashMap<>();
+        params.put("email", email);
+        params.put("lastname", lastname);
+        params.put("firstname", firstname);
+        params.put("phone", phone);
+        params.put("birth", birth);
+        params.put("civility", civility);
+        params.put("password", password);
+        JSONObject parameters = new JSONObject(params);
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, parameters, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+                onApiResponse(jsonObject);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                Toast.makeText(getApplicationContext(), volleyError.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+        databaseManager.queue.add(jsonObjectRequest);
+    }
 }
