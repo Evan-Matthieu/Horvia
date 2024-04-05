@@ -8,6 +8,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.horvia.horvia.databinding.ActivityMainBinding;
 import com.horvia.horvia.ui.cart.CartFragment;
 import com.horvia.horvia.ui.home.HomeFragment;

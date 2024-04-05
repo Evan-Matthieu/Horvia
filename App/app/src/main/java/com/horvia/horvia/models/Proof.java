@@ -5,6 +5,9 @@ import android.media.Image;
 import java.io.File;
 
 public class Proof {
+    public Proof(){
+
+    }
 
     /* PRIMARY KEY */
     public int Id;

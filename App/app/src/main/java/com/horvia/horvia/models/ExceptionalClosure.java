@@ -6,6 +6,9 @@ import java.time.LocalTime;
 import java.util.Date;
 
 public class ExceptionalClosure {
+    public ExceptionalClosure(){
+
+    }
 
     /* PRIMARY KEY */
     public int Id;

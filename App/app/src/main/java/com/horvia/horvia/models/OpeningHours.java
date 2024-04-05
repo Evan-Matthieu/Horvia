@@ -4,6 +4,9 @@ import java.sql.Time;
 import java.time.DayOfWeek;
 
 public class OpeningHours {
+    public OpeningHours(){
+
+    }
 
     /* PRIMARY KEY */
     public int Id;

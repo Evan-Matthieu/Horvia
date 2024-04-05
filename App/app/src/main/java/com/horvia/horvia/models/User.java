@@ -15,12 +15,15 @@ public class User {
     /* FOREIGN KEY */
     public short RoleId;
 
+    public int LocationId;
+
     /* PROPERTIES */
     public String Lastname;
     public String FirstName;
     public String Email;
     public String PhoneNumber;
     public Role Role;
+    public Location Location;
     public String Password;
     public Locale Language;
     public Date RegisterDate;

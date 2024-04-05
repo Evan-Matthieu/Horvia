@@ -3,6 +3,10 @@ package com.horvia.horvia.models;
 import android.media.Image;
 
 public class Product {
+    public Product(){
+
+    }
+
     /* PRIMARY KEY */
     public int Id;
 

@@ -6,11 +6,10 @@ public class Location {
     public int Id;
 
     /* FOREIGN KEY */
-    public int UserId;
 
     /* PROPERTIES */
-    public User User;
     public String Address;
     public String ZipCode;
     public String City;
+    public String FurtherDetails;
 }

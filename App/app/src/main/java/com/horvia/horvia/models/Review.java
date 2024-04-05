@@ -1,6 +1,9 @@
 package com.horvia.horvia.models;
 
 public class Review {
+    public Review(){
+
+    }
 
     /* PRIMARY KEY */
     public int Id;
