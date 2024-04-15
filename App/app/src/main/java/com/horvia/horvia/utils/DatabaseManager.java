@@ -1,4 +1,4 @@
-package com.horvia.horvia.models;
+package com.horvia.horvia.utils;
 
 import android.content.Context;
 

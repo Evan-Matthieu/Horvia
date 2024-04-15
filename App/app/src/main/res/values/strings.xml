@@ -21,13 +21,14 @@
     <string name="birth_date">Date de naissance</string>
     <string name="mister">Monsieur</string>
     <string name="madam">Madame</string>
-    <string name="miss">Mademoiselle</string>
-    <string name="other">Autre</string>
     <string name="required_field">Ce champ est requis</string>
     <string name="invalid_email">Email invalide</string>
     <string name="invalid_phone_number">Numéro de téléphone invalide</string>
     <string name="password_should_be_same">Les mots de passe saisis ne correspondent pas</string>
     <string name="invalid_date">Date invalide</string>
+    <string name="error_occured">Une erreur est apparue</string>
+    <string name="wrong_credentials">L\'identifiant ou le mot de passe fournit n\'est pas valide</string>
+    <string name="retry_later">Réessaez plus tard</string>
     <!-- TODO: Remove or change this placeholder text -->
     <!-- TODO: Remove or change this placeholder text -->
     <!-- Strings used for fragments for navigation -->

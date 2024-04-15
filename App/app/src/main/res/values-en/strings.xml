@@ -21,11 +21,12 @@
     <string name="lastname">Lastname</string>
     <string name="mister">Mister</string>
     <string name="madam">Madam</string>
-    <string name="miss">Miss</string>
-    <string name="other">Other</string>
     <string name="required_field">Required field</string>
     <string name="invalid_email">Invalid email</string>
     <string name="invalid_phone_number">Invalid phone number</string>
     <string name="password_should_be_same">Passwords entered do not match</string>
     <string name="invalid_date">Invalid date</string>
+    <string name="error_occured">An error occured</string>
+    <string name="wrong_credentials">Given email or password is invalid</string>
+    <string name="retry_later">Try again Later</string>
 </resources>

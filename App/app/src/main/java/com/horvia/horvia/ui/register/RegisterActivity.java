@@ -23,7 +23,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.horvia.horvia.R;
-import com.horvia.horvia.models.DatabaseManager;
+import com.horvia.horvia.utils.DatabaseManager;
 import com.horvia.horvia.models.User;
 import com.horvia.horvia.ui.login.LoginActivity;
 import com.horvia.horvia.models.Civility;

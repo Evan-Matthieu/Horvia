@@ -1,92 +1,117 @@
 package com.horvia.horvia.network;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
+import android.util.Log;
+import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.horvia.horvia.MainActivity;
 import com.horvia.horvia.R;
 import com.horvia.horvia.models.Category;
+import com.horvia.horvia.utils.DatabaseManager;
 import com.horvia.horvia.models.Farm;
 import com.horvia.horvia.models.Location;
 import com.horvia.horvia.models.User;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ApiRequest {
 
+    private final String API_URL = "https://api-horvia.foxysnake.com/api";
+    private Context _context;
+    private DatabaseManager _databaseManager;
+    private String _jwtToken;
+
+    public ApiRequest(Context context){
+        _context = context;
+        _databaseManager = new DatabaseManager(context);
+
+        SharedPreferences sharedPreferences = _context.getSharedPreferences("User_Login", Context.MODE_PRIVATE);
+        _jwtToken = sharedPreferences.getString("jwtToken", "");
+    }
+
+
     // USER REQUESTS
 
-    public ApiResponseWithEntity<String> TryLogin(String username, String password){
-        //TODO
-        return new ApiResponseWithEntity<>();
+    public void TryLogin(String email, String password, ApiRequestListener<String> callback){
+
+
+        Map<String, String> params = new HashMap<>();
+        params.put("email", email);
+        params.put("password", password);
+        JSONObject parameters = new JSONObject(params);
+        Log.d("test", "1");
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, API_URL + "/action/connectUser.php", parameters, response -> {
+            Log.d("test", "2");
+            try {
+                Log.d("success", String.valueOf(response.getBoolean("success")));
+                Log.d("entity", response.getString("entity"));
+                if(response.getBoolean("success")){
+                    callback.onComplete(response.getString("entity"), null);
+                }
+                else{
+                    callback.onComplete(null, _context.getResources().getString(R.string.wrong_credentials));
+                }
+
+            } catch (JSONException e) {
+                Log.d("error", "salope1");
+                callback.onComplete(null, _context.getResources().getString(R.string.error_occured));
+                e.printStackTrace();
+            }
+        }, error -> {
+            Log.d("error", "salope2");
+            callback.onComplete(null, _context.getResources().getString(R.string.retry_later));
+        }) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + _jwtToken);
+                return headers;
+            }
+        };
+        Log.d("test", "5");
+        _databaseManager.queue.add(jsonObjectRequest);
     }
 
-    public ApiResponseWithEntity<String> CreateAccount(User user){
+    public void CreateAccount(User user){
         //TODO
-        return new ApiResponseWithEntity<>();
-    }
-
-    public ApiResponse DeleteAccount(String userEmail){
-        //TODO
-        return new ApiResponse();
-    }
-
-    public ApiResponseWithEntity<User> UpdateUserInformations(User user){
-        //TODO
-        return new ApiResponseWithEntity<>();
     }
 
 
 
     // USER ADDRESS REQUESTS
 
-    public ApiResponseWithEntity<User> CreateUserAddress(Location location){
-        //TODO
-        return new ApiResponseWithEntity<>();
-    }
 
-    public ApiResponseWithEntity<Location> UpdateUserAddress(Location location){
-        //TODO
-        return new ApiResponseWithEntity<>();
-    }
-
-    public ApiResponse DeleteUserAddress(int locationId){
-        //TODO
-        return new ApiResponse();
-    }
 
 
 
     // FARM REQUEST
 
-    public ApiResponseWithEntity<Farm> CreateFarm(Farm farm){
-        //TODO
-        return new ApiResponseWithEntity<>();
-    }
 
-    public ApiResponseWithEntity<Farm> UpdateFarmInformations(Farm farm){
-        //TODO
-        return new ApiResponseWithEntity<>();
-    }
-
-    public ApiResponse DeleteFarm(int FarmId){
-        //TODO
-        return new ApiResponse();
-    }
 
 
 
     // CATEGORY REQUEST
 
-    public ApiResponseWithEntity<List<Category>> GetMainCategories(){
+    public void GetMainCategories(){
         List<Category> categoryies = new ArrayList<>();
-        ApiResponseWithEntity<List<Category>> apiResponse = new ApiResponseWithEntity<>();
-        apiResponse.Entity.add(new Category("Légumes","", 45, 584));
-        apiResponse.Entity.add(new Category("Fruits","", 164, 584));
-        apiResponse.Entity.add(new Category("Produits laitiers","", 8133, 584));
-        apiResponse.Entity.add(new Category("Viandes","", 18, 584));
+        categoryies.add(new Category("Légumes","", 45, 584));
+        categoryies.add(new Category("Fruits","", 164, 584));
+        categoryies.add(new Category("Produits laitiers","", 8133, 584));
+        categoryies.add(new Category("Viandes","", 18, 584));
 
-
-        //TODO
-        return new ApiResponseWithEntity<>();
     }
+
 
 
 }

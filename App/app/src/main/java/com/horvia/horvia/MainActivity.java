@@ -1,6 +1,8 @@
 package com.horvia.horvia;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -38,16 +40,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void checkUserCredentials(){
-        //TODO : Faire l'implémentation de la vérification si l'utilisateur est connecté ou non
-        boolean isUserLogged = false;
-        if(!isUserLogged){
+        SharedPreferences sharedPreferences = this.getSharedPreferences("User_Login", Context.MODE_PRIVATE);
+        String jwtToken = sharedPreferences.getString("jwtToken", null);
+
+        if(jwtToken == null){
             Intent myIntent = new Intent(this, LoginActivity.class);
             startActivity(myIntent);
             finish();
         }
     }
-
-
 
     private boolean onItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
