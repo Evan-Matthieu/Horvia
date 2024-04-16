@@ -1,5 +1,6 @@
 package com.horvia.horvia.models;
 
+import android.graphics.Bitmap;
 import android.media.Image;
 
 public class Product {
@@ -18,5 +19,5 @@ public class Product {
     public String Description;
     public float UnitPrice;
     public MeasuringUnit MeasuringUnit;
-    public Image Picture;
+    public Bitmap Picture;
 }

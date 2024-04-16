@@ -1,6 +1,8 @@
 package com.horvia.horvia.models;
 
 
+import android.graphics.Bitmap;
+
 import java.util.Date;
 import java.util.Locale;
 
@@ -29,4 +31,6 @@ public class User {
     public Date RegisterDate;
     public Date BirthDate;
     public Civility Cility;
+
+    public Bitmap Picture;
 }

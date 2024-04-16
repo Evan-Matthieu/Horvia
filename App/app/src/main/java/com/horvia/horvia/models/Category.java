@@ -1,5 +1,6 @@
 package com.horvia.horvia.models;
 
+import android.graphics.Bitmap;
 import android.media.Image;
 
 import java.io.File;
@@ -18,6 +19,10 @@ public class Category {
         this.FarmNumber = farmNumber;
     }
 
+    public Category(int id){
+        this.Id = id;
+    }
+
     /* PRIMARY KEY */
     public int Id;
 
@@ -27,7 +32,7 @@ public class Category {
     /* PROPERTIES */
     public String Name;
     public String Description;
-    public Image Picture;
+    public Bitmap Picture;
     public List<Product> Products;
     public int ProductsNumber;
     public List<Farm> Farm;

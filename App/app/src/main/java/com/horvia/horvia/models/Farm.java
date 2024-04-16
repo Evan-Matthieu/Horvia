@@ -1,5 +1,6 @@
 package com.horvia.horvia.models;
 
+import android.graphics.Bitmap;
 import android.media.Image;
 
 import java.io.File;
@@ -18,7 +19,7 @@ public class Farm {
 
     /* PROPERTIES */
     public String Name;
-    public Image Picture;
+    public Bitmap Picture;
     public Location Location;
     public List<Category> Categories;
     public List<Product> Products;
