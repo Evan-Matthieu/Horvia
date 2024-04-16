@@ -8,10 +8,13 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.horvia.horvia.MainActivity;
 import com.horvia.horvia.R;
 import com.horvia.horvia.models.Category;
+import com.horvia.horvia.utils.BitmapUtil;
 import com.horvia.horvia.utils.DatabaseManager;
 import com.horvia.horvia.models.Farm;
 import com.horvia.horvia.models.Location;
@@ -50,12 +53,8 @@ public class ApiRequest {
         params.put("email", email);
         params.put("password", password);
         JSONObject parameters = new JSONObject(params);
-        Log.d("test", "1");
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, API_URL + "/action/connectUser.php", parameters, response -> {
-            Log.d("test", "2");
             try {
-                Log.d("success", String.valueOf(response.getBoolean("success")));
-                Log.d("entity", response.getString("entity"));
                 if(response.getBoolean("success")){
                     callback.onComplete(response.getString("entity"), null);
                 }
@@ -64,12 +63,10 @@ public class ApiRequest {
                 }
 
             } catch (JSONException e) {
-                Log.d("error", "salope1");
                 callback.onComplete(null, _context.getResources().getString(R.string.error_occured));
                 e.printStackTrace();
             }
         }, error -> {
-            Log.d("error", "salope2");
             callback.onComplete(null, _context.getResources().getString(R.string.retry_later));
         }) {
             @Override
@@ -98,6 +95,47 @@ public class ApiRequest {
     // FARM REQUEST
 
 
+public void CreateFarm(Farm farm , ApiRequestListener<String> callback) {
+
+
+
+    Map<String, String> params = new HashMap<>();
+    params.put("name", farm.Name);
+    params.put("description", farm.Description);
+    params.put("category", farm.Description);
+    params.put("address", farm.Location.Address);
+    params.put("zip_code", farm.Location.ZipCode);
+    params.put("city", farm.Location.City);
+    params.put("picture", BitmapUtil.BitmapToString(farm.Picture));
+    JSONObject parameters = new JSONObject(params);
+
+    Log.d("Photo:", BitmapUtil.BitmapToString(farm.Picture));
+
+    JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, API_URL + "/action/createFarm.php", parameters, response -> {
+        try {
+            if(response.getBoolean("success")){
+                callback.onComplete(null, null);
+            }
+            else{
+                callback.onComplete(null, response.getString("error"));
+            }
+
+        } catch (JSONException e) {
+            callback.onComplete(null, _context.getResources().getString(R.string.error_occured));
+            e.printStackTrace();
+        }
+    }, error -> {
+        callback.onComplete(null, _context.getResources().getString(R.string.retry_later));
+    }) {
+        @Override
+        public Map<String, String> getHeaders() {
+            Map<String, String> headers = new HashMap<>();
+            headers.put("Authorization", "Bearer " + _jwtToken);
+            return headers;
+        }
+    };
+    _databaseManager.queue.add(jsonObjectRequest);
+}
 
 
 
