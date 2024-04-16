@@ -31,4 +31,3 @@ if (isset($json['email']) && isset($json['password'])) {
 }
 
 echo json_encode($result);
-?>

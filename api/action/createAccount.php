@@ -41,7 +41,7 @@ if (isset($json['firstname'])
         } else {
             try {
 
-            $createAccount = $bdd->prepare("INSERT INTO `user` (lastname, firstname, email, phone, password, date_inscription, birth, civility) VALUES (?, ?, ?, ?, ?, ?, ?, ?);");
+            $createAccount = $bdd->prepare("INSERT INTO `user` (lastname, firstname, email, phone, password, register_date, birth_date, civility) VALUES (?, ?, ?, ?, ?, ?, ?, ?);");
             $result["password"] = $passwordHashed;
             $createAccount->execute(array($lastname, $firstname, $email, $phone, $passwordHashed, $creationDate, $birth, $civility));
             $result["success"] = true;
