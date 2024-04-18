@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = this.getSharedPreferences("User_Login", Context.MODE_PRIVATE);
         String jwtToken = sharedPreferences.getString("jwtToken", null);
 
-        if(jwtToken == null){
+        if(jwtToken != null){
             Intent myIntent = new Intent(this, LoginActivity.class);
             startActivity(myIntent);
             finish();
