@@ -83,6 +83,14 @@ public class HomeFragment extends Fragment {
 
                     for (int i = 0; i < farmAdapter.getCount(); i++) {
                         View item = farmAdapter.getView(i, null, null);
+
+                        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                                LinearLayout.LayoutParams.MATCH_PARENT,
+                                LinearLayout.LayoutParams.WRAP_CONTENT
+                        );
+                        layoutParams.setMargins(0,0,0,40);
+                        item.setLayoutParams(layoutParams);
+
                         llFarmList.addView(item);
                         Farm farm = farmAdapter.getItem(i);
 

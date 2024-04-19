@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 public class SearchFragment extends Fragment {
 
-    private ArrayList<Integer> categoriesSelectedId;
+    private ArrayList<Integer> categoriesSelectedId = new ArrayList<>();
 
     public SearchFragment() {
         // Required empty public constructor
