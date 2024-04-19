@@ -1,61 +1,35 @@
 package com.horvia.horvia.ui.home;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.net.Uri;
 import android.os.Bundle;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.Space;
 import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.horvia.horvia.MainActivity;
 import com.horvia.horvia.R;
 import com.horvia.horvia.models.Category;
-import com.horvia.horvia.models.Civility;
 import com.horvia.horvia.models.Farm;
-import com.horvia.horvia.models.Location;
 import com.horvia.horvia.network.ApiRequest;
 import com.horvia.horvia.network.ApiRequestListener;
-import com.horvia.horvia.ui.login.LoginActivity;
-import com.horvia.horvia.utils.BitmapUtil;
-import com.horvia.horvia.utils.FarmAdapter;
+import com.horvia.horvia.ui.farms.FarmDetailFragment;
+import com.horvia.horvia.ui.search.SearchFragment;
+import com.horvia.horvia.utils.adapter.FarmAdapter;
+import com.horvia.horvia.utils.adapter.MainCategoryAdapter;
 import com.horvia.horvia.utils.pagination.PaginationParams;
 import com.horvia.horvia.utils.pagination.PaginationResult;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.ByteArrayOutputStream;
-import java.text.SimpleDateFormat;
-import java.util.Base64;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
 
 public class HomeFragment extends Fragment {
 
-    LinearLayout farmListLinearLayout;
+    LinearLayout llFarmList, llMainCategories;
     public HomeFragment() {
 
     }
@@ -66,7 +40,40 @@ public class HomeFragment extends Fragment {
 
         ApiRequest apiRequest = new ApiRequest(rootView.getContext());
 
-        farmListLinearLayout = rootView.findViewById(R.id.farm_list);
+        llFarmList = rootView.findViewById(R.id.farm_list);
+        llMainCategories = rootView.findViewById(R.id.main_categories_list);
+
+        apiRequest.GetMainCategories(new ApiRequestListener<ArrayList<Category>>() {
+            @Override
+            public void onComplete(@Nullable ArrayList<Category> entity, String error) {
+                if(entity != null){
+                    MainCategoryAdapter categoryAdapter = new MainCategoryAdapter(container.getContext(), entity);
+
+
+                    for (int i = 0; i < categoryAdapter.getCount(); i++) {
+                        View item = categoryAdapter.getView(i, null, null);
+                        item.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT,1));
+                        Log.d("itemLayout", item.getLayoutParams().toString());
+                        llMainCategories.addView(item);
+
+                        Category category = categoryAdapter.getItem(i);
+
+                        item.setOnClickListener(view -> {
+                            SearchFragment fragment = new SearchFragment();
+                            Bundle args = new Bundle();
+                            args.putInt("categoryId", category.Id);
+                            fragment.setArguments(args);
+
+                            getParentFragmentManager().beginTransaction()
+                                    .replace(R.id.mainContentFragment, fragment)
+                                    .addToBackStack(null)
+                                    .commit();
+                        });
+                    }
+                }
+
+            }
+        });
 
         apiRequest.GetFarms(new PaginationParams(), new ApiRequestListener<PaginationResult<Farm>>() {
             @Override
@@ -76,7 +83,21 @@ public class HomeFragment extends Fragment {
 
                     for (int i = 0; i < farmAdapter.getCount(); i++) {
                         View item = farmAdapter.getView(i, null, null);
-                        farmListLinearLayout.addView(item);
+                        llFarmList.addView(item);
+                        Farm farm = farmAdapter.getItem(i);
+
+                        item.setOnClickListener(view -> {
+                            FarmDetailFragment fragment = new FarmDetailFragment();
+                            Bundle args = new Bundle();
+                            args.putInt("id", farm.Id);
+                            args.putString("name", farm.Name);
+                            fragment.setArguments(args);
+
+                            getParentFragmentManager().beginTransaction()
+                                    .replace(R.id.mainContentFragment, fragment)
+                                    .addToBackStack(null)
+                                    .commit();
+                        });
                     }
                 }
                 else{
