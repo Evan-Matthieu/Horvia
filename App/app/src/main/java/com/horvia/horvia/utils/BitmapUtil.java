@@ -22,8 +22,9 @@ public class BitmapUtil {
 
     public static String BitmapToString(Bitmap bitmap) {
         try {
+            Bitmap resizedBitmap = Bitmap.createScaledBitmap(bitmap, 200, 200, true); // Réduction de la résolution à 200x200 pixels
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 50, byteArrayOutputStream);
             byte[] bytes = byteArrayOutputStream.toByteArray();
             String temp = Base64.getEncoder().encodeToString(bytes);
             return temp;

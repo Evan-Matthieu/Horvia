@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -13,10 +14,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.horvia.horvia.databinding.ActivityMainBinding;
 import com.horvia.horvia.ui.cart.CartFragment;
+import com.horvia.horvia.ui.home.CreateFarmFragment;
 import com.horvia.horvia.ui.home.HomeFragment;
 import com.horvia.horvia.ui.login.LoginActivity;
 import com.horvia.horvia.ui.profile.ProfileFragment;
 import com.horvia.horvia.ui.search.SearchFragment;
+
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,9 +28,9 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        checkUserCredentials();
-
         super.onCreate(savedInstanceState);
+
+        checkUserCredentials();
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -42,13 +46,20 @@ public class MainActivity extends AppCompatActivity {
     private void checkUserCredentials(){
         SharedPreferences sharedPreferences = this.getSharedPreferences("User_Login", Context.MODE_PRIVATE);
         String jwtToken = sharedPreferences.getString("jwtToken", null);
-
-        if(jwtToken != null){
+        if(jwtToken != null) {
+            Log.d("jwt", jwtToken);
+            if(jwtToken.isEmpty()){
+                Intent myIntent = new Intent(this, LoginActivity.class);
+                startActivity(myIntent);
+                finish();
+            }
+        } else {
             Intent myIntent = new Intent(this, LoginActivity.class);
             startActivity(myIntent);
             finish();
         }
     }
+
 
     private boolean onItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();

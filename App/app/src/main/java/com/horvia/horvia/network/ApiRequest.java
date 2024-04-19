@@ -41,50 +41,40 @@ public class ApiRequest {
     public ApiRequest(Context context){
         _context = context;
         _databaseManager = new DatabaseManager(context);
-
-        SharedPreferences sharedPreferences = _context.getSharedPreferences("User_Login", Context.MODE_PRIVATE);
-        _jwtToken = sharedPreferences.getString("jwtToken", "");
     }
 
 
     // USER REQUESTS
 
     public void TryLogin(String email, String password, ApiRequestListener<String> callback){
-
         Map<String, String> params = new HashMap<>();
         params.put("email", email);
         params.put("password", password);
         JSONObject parameters = new JSONObject(params);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, API_URL + "/action/connectUser.php", parameters, response -> {
-            try {
-                if(response.getBoolean("success")){
-                    callback.onComplete(response.getString("entity"), null);
-                }
-                else{
+            if (response != null) {
+                if (response.optBoolean("success")) {
+                    String token = response.optString("entity");
+                    callback.onComplete(token, null);
+                } else {
                     callback.onComplete(null, _context.getResources().getString(R.string.wrong_credentials));
                 }
-
-            } catch (JSONException e) {
+            } else {
                 callback.onComplete(null, _context.getResources().getString(R.string.error_occured));
-                e.printStackTrace();
             }
         }, error -> {
             callback.onComplete(null, _context.getResources().getString(R.string.retry_later));
-        }) {
-            @Override
-            public Map<String, String> getHeaders() {
-                Map<String, String> headers = new HashMap<>();
-                headers.put("Authorization", "Bearer " + _jwtToken);
-                return headers;
-            }
-        };
-        Log.d("test", "5");
+        });
+
         _databaseManager.queue.add(jsonObjectRequest);
     }
+
+
 
     public void CreateAccount(User user){
         //TODO
     }
+
 
 
 
@@ -97,7 +87,7 @@ public class ApiRequest {
     // FARM REQUEST
 
     public void GetFarms(PaginationParams paginationParams, ApiRequestListener<PaginationResult<Farm>> callback){
-        String url = API_URL + "/action/getFarm.php?page_size=" + paginationParams.PageSize + "&page_number=" + paginationParams.PageNumber;
+        String url = API_URL + "/action/getFarms.php?page_size=" + paginationParams.PageSize + "&page_number=" + paginationParams.PageNumber;
         if(paginationParams.Query != null) url = url + "&query=" + paginationParams.Query;
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, new JSONObject(), response -> {
             try {
@@ -165,6 +155,7 @@ public class ApiRequest {
         params.put("city", farm.Location.City);
         params.put("picture", BitmapUtil.BitmapToString(farm.Picture));
         JSONObject parameters = new JSONObject(params);
+
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, API_URL + "/action/createFarm.php", parameters, response -> {
             try {
