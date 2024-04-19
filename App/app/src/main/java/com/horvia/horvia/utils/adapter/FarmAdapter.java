@@ -1,4 +1,4 @@
-package com.horvia.horvia.utils;
+package com.horvia.horvia.utils.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -33,13 +33,12 @@ public class FarmAdapter extends BaseAdapter {
     }
 
     @Override
-    public Object getItem(int i) {
-        return null;
+    public Farm getItem(int i) {
+        return farms.get(i);
     }
 
-    @Override
     public long getItemId(int i) {
-        return 0;
+        return farms.get(i).Id;
     }
 
     @Override
@@ -54,9 +53,13 @@ public class FarmAdapter extends BaseAdapter {
         imageView.setImageBitmap(farms.get(i).Picture);
         nameView.setText(farms.get(i).Name);
         if(farms.get(i).Rate == null){
-            ratingBar.setVisibility(View.INVISIBLE);
-            ratingBarValue.setVisibility(View.INVISIBLE);
-            ratingBarNumber.setVisibility(View.INVISIBLE);
+            LinearLayout layout = view.findViewById(R.id.farms_list_layout);
+
+            layout.removeView(view.findViewById(R.id.farm_rate_list_container));
+
+            //ratingBar.setVisibility(View.INVISIBLE);
+            //ratingBarValue.setVisibility(View.INVISIBLE);
+            //ratingBarNumber.setVisibility(View.INVISIBLE);
         }
         else{
             ratingBar.setRating(farms.get(i).Rate);

@@ -71,7 +71,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 @Override
                 public void onComplete(@Nullable String entity, String error) {
-                    Log.d("complete", error);
+
                     Intent interfaceActivity = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(interfaceActivity);
                     finish();

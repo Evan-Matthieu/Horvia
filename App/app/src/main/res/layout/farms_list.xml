@@ -19,26 +19,32 @@
         android:layout_height="wrap_content"
         android:layout_marginVertical="10dp"/>
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal">
+        android:layout_height="match_parent"
+        android:id="@+id/farm_rate_list_container">
 
-        <RatingBar
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:isIndicator="true"
-            android:id="@+id/farm_list_rate" />
+            android:gravity="center_horizontal">
+
+            <RatingBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:isIndicator="true"
+                android:id="@+id/farm_list_rate" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/farm_rate_list_value" />
+        </LinearLayout>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/farm_rate_list_value" />
-    </LinearLayout>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/farm_rate_list_number"/>
+            android:id="@+id/farm_rate_list_number"/>
+    </FrameLayout>
 
 </LinearLayout>

@@ -29,8 +29,6 @@
     <string name="error_occured">Une erreur est apparue</string>
     <string name="wrong_credentials">L\'identifiant ou le mot de passe fournit n\'est pas valide</string>
     <string name="retry_later">Rééssayez plus tard</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <!-- TODO: Remove or change this placeholder text -->
-    <!-- Strings used for fragments for navigation -->
+
 
 </resources>
