@@ -37,4 +37,11 @@
     <string name="addresses">Addresses</string>
     <string name="logout">Logout</string>
     <string name="year">years old</string>
+    <string name="save">Save</string>
+    <string name="edit">Edit</string>
+    <string name="current_password">Current password</string>
+    <string name="new_password">New password</string>
+    <string name="confirm">Confirm</string>
+    <string name="your_password_has_been_modified">Your password has been modified</string>
+    <string name="modify_my_password">Modify my password</string>
 </resources>

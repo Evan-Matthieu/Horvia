@@ -129,6 +129,11 @@ public class ApiRequest {
         //TODO
     }
 
+    public void ChangePassword(String currentPassword, String newPassword, ApiRequestListener<Boolean> callback){
+        // TODO faire la requete à l'API
+
+    }
+
 
 
     // USER ADDRESS REQUESTS

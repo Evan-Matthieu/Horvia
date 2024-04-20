@@ -37,6 +37,13 @@
     <string name="last_order">Dernières commandes</string>
     <string name="logout">Deconnexion</string>
     <string name="year">ans</string>
+    <string name="save">Sauvegarder</string>
+    <string name="edit">Modifier</string>
+    <string name="current_password">Mot de passe actuel</string>
+    <string name="new_password">Nouveau mot de passe</string>
+    <string name="confirm">Confirmer</string>
+    <string name="your_password_has_been_modified">Votre mot de passe a été modifié</string>
+    <string name="modify_my_password">Modifier mon mot de passe</string>
 
 
 </resources>

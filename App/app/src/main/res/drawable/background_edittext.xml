@@ -6,11 +6,5 @@
         android:color="@color/secondary"
         />
 
-    <padding android:left="10dp"
-        android:top="15dp"
-        android:right="10dp"
-        android:bottom="15dp"
-        />
-
     <corners android:radius="10dp"/>
 </shape>

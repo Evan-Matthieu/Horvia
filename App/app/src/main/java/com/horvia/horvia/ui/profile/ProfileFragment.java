@@ -50,12 +50,13 @@ public class ProfileFragment extends Fragment {
         age = view.findViewById(R.id.user_age);
 
         apiRequest = new ApiRequest(getContext());
+
         personnalInformationsLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 getParentFragmentManager().beginTransaction()
                         .replace(R.id.mainContentFragment, new PersonnalInformationsFragment())
-                        .addToBackStack(null)
+                        .addToBackStack(ProfileFragment.class.toString())
                         .commit();
             }
         });
@@ -65,7 +66,7 @@ public class ProfileFragment extends Fragment {
             public void onClick(View view) {
                 getParentFragmentManager().beginTransaction()
                         .replace(R.id.mainContentFragment, new AddressFragment())
-                        .addToBackStack(null)
+                        .addToBackStack(ProfileFragment.class.toString())
                         .commit();
             }
         });
@@ -75,11 +76,10 @@ public class ProfileFragment extends Fragment {
             public void onClick(View view) {
                 getParentFragmentManager().beginTransaction()
                         .replace(R.id.mainContentFragment, new LastOrdersFragment())
-                        .addToBackStack(null)
+                        .addToBackStack(ProfileFragment.class.toString())
                         .commit();
             }
         });
-
         logoutLoayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
