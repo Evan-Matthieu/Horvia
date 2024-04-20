@@ -36,6 +36,7 @@
     <string name="addresses">Adresses</string>
     <string name="last_order">Dernières commandes</string>
     <string name="logout">Deconnexion</string>
+    <string name="year">ans</string>
 
 
 </resources>

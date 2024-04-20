@@ -30,7 +30,7 @@ public class User {
     public Locale Language;
     public Date RegisterDate;
     public Date BirthDate;
-    public Civility Cility;
+    public Civility Civility;
 
     public Bitmap Picture;
 }

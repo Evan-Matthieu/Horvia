@@ -77,7 +77,6 @@ public class SearchFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 currentQuery = queryEditText.getText().toString();
-                Log.d("currentQuery", currentQuery);
                 llFarmList.removeAllViews();
                 fetchFarmPaginated();
             }

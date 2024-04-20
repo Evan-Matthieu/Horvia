@@ -36,4 +36,5 @@
     <string name="personnal_informations">Personnal informations</string>
     <string name="addresses">Addresses</string>
     <string name="logout">Logout</string>
+    <string name="year">years old</string>
 </resources>

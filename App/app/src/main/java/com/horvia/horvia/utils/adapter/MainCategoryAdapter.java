@@ -52,7 +52,6 @@ public class MainCategoryAdapter extends BaseAdapter {
         TextView nameView = view.findViewById(R.id.main_category_name);
         TextView countView = view.findViewById(R.id.main_category_count);
 
-        Log.d("categoryN", String.valueOf(categories.get(i).FarmNumber));
 
 
         imageView.setImageBitmap(categories.get(i).Picture);

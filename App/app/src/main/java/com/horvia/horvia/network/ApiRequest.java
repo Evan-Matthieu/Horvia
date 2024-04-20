@@ -12,6 +12,7 @@ import com.android.volley.Request;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.horvia.horvia.R;
 import com.horvia.horvia.models.Category;
+import com.horvia.horvia.models.Civility;
 import com.horvia.horvia.models.Location;
 import com.horvia.horvia.models.Product;
 import com.horvia.horvia.utils.BitmapUtil;
@@ -25,9 +26,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class ApiRequest {
@@ -41,10 +46,59 @@ public class ApiRequest {
         _context = context;
         _databaseManager = new DatabaseManager(context);
 
+        SharedPreferences sharedPreferences = context.getSharedPreferences("User_Login", Context.MODE_PRIVATE);
+        _jwtToken = sharedPreferences.getString("jwtToken", null);
     }
 
 
     // USER REQUESTS
+
+    public void GetUsers(ApiRequestListener<User> callback){
+        String url = API_URL + "/action/getUsers.php";
+
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, new JSONObject(), response -> {
+            try {
+                if(response.getBoolean("success")){
+                    JSONObject entity = response.getJSONObject("entity");
+
+
+                    User user = new User();
+
+                    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.FRENCH);
+
+                    user.FirstName = entity.getString("firstname");
+                    user.Lastname = entity.getString("lastname");
+                    user.Email = entity.getString("email");
+                    user.PhoneNumber = entity.getString("phone");
+                    user.BirthDate = formatter.parse(entity.getString("birth_date"));
+                    user.Picture = BitmapUtil.StringToBitmap(entity.getString("picture"));
+                    user.Civility = Civility.valueOf(entity.getString("civility"));
+
+
+                    callback.onComplete(user, null);
+                }
+                else{
+                    callback.onComplete(null, response.getString("error"));
+                }
+            } catch (JSONException e) {
+                callback.onComplete(null, _context.getResources().getString(R.string.error_occured));
+                e.printStackTrace();
+            } catch (ParseException e) {
+                throw new RuntimeException(e);
+            }
+        }, error -> {
+            callback.onComplete(null, String.valueOf(error));
+        }) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + _jwtToken);
+                return headers;
+            }
+        };
+        _databaseManager.queue.add(jsonObjectRequest);
+    }
 
     // USER REQUESTS
 
@@ -80,57 +134,7 @@ public class ApiRequest {
     // USER ADDRESS REQUESTS
 
 
-
-
-
-    // FARM REQUEST
-    public void GetFarm(int farmId, ApiRequestListener<Farm> callback){
-
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, API_URL + "/getFarm.php?id=" + farmId, new JSONObject(), response -> {
-            try {
-                if(response.getBoolean("success")){
-
-                    JSONObject entity = response.getJSONObject("entity");
-
-                    Location location = new Location();
-                    location.Address = entity.getString("address");
-                    location.ZipCode = entity.getString("zipCode");
-                    location.City = entity.getString("city");
-
-                    Farm farm = new Farm();
-                    farm.Name = entity.getString("name");
-                    farm.Description = entity.getString("description");
-                    farm.Rate = entity.getString("rate").equals("null") ? null : Float.parseFloat(entity.getString("rate"));
-                    farm.RateNumber = entity.getInt("rate_number");
-                    farm.Picture = BitmapUtil.StringToBitmap(entity.getString("picture"));
-                    farm.Location = location;
-
-                    for (String id : entity.getString("categories").split(",")) {
-                        farm.Categories.add(new Category(parseInt(id)));
-                    }
-
-                    callback.onComplete(farm, null);
-                }
-                else{
-                    callback.onComplete(null, response.getString("error"));
-                }
-            } catch (JSONException e) {
-                callback.onComplete(null, _context.getResources().getString(R.string.error_occured));
-                e.printStackTrace();
-            }
-        }, error -> {
-            callback.onComplete(null, String.valueOf(error));
-        }) {
-            @Override
-            public Map<String, String> getHeaders() {
-                Map<String, String> headers = new HashMap<>();
-                headers.put("Authorization", "Bearer " + _jwtToken);
-                return headers;
-            }
-        };
-        _databaseManager.queue.add(jsonObjectRequest);
-    }
-
+    // Farm Request
 
     public void GetFarms(PaginationParams paginationParams, @Nullable ArrayList<Integer> categoriesId, ApiRequestListener<PaginationResult<Farm>> callback){
         String url = API_URL + "/action/getFarms.php?page_size=" + paginationParams.PageSize + "&page_number=" + paginationParams.PageNumber;
@@ -277,7 +281,6 @@ public class ApiRequest {
 
     public void GetFarmCategories(int farmId,boolean includeProducts , ApiRequestListener<ArrayList<Category>> callback){
         String url = API_URL + "/action/getFarmCategories.php?id=" + farmId + "&wp=" + (includeProducts ? 1 : 0);
-        Log.d("url", url);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, new JSONObject(), response -> {
             try {
                 if(response.getBoolean("success")){

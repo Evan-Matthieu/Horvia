@@ -32,14 +32,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
-                android:textStyle="bold"
-                android:text="Michel Vermont" />
+                android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/user_age"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/grey"
-                android:text="43 ans" />
+                android:textColor="@color/grey" />
         </LinearLayout>
 
 

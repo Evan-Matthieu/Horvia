@@ -53,7 +53,6 @@ public class HomeFragment extends Fragment {
                     for (int i = 0; i < categoryAdapter.getCount(); i++) {
                         View item = categoryAdapter.getView(i, null, null);
                         item.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT,1));
-                        Log.d("itemLayout", item.getLayoutParams().toString());
                         llMainCategories.addView(item);
 
                         Category category = categoryAdapter.getItem(i);
