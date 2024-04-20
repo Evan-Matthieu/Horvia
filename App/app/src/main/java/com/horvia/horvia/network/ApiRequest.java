@@ -6,15 +6,14 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import androidx.annotation.Nullable;
+
 import com.android.volley.Request;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonDeserializer;
-import com.google.gson.JsonObject;
 import com.horvia.horvia.R;
 import com.horvia.horvia.models.Category;
 import com.horvia.horvia.models.Location;
+import com.horvia.horvia.models.Product;
 import com.horvia.horvia.utils.BitmapUtil;
 import com.horvia.horvia.utils.DatabaseManager;
 import com.horvia.horvia.models.Farm;
@@ -57,6 +56,7 @@ public class ApiRequest {
         JSONObject parameters = new JSONObject(params);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, API_URL + "/action/connectUser.php", parameters, response -> {
             try {
+                Log.d("responseLogin", String.valueOf(response));
                 if(response.getBoolean("success")){
                     callback.onComplete(response.getString("entity"), null);
                 }
@@ -69,6 +69,7 @@ public class ApiRequest {
                 e.printStackTrace();
             }
         }, error -> {
+            Log.d("errorNetwork", error.getMessage());
             callback.onComplete(null, _context.getResources().getString(R.string.retry_later));
         }) {
             @Override
@@ -78,7 +79,6 @@ public class ApiRequest {
                 return headers;
             }
         };
-        Log.d("test", "5");
         _databaseManager.queue.add(jsonObjectRequest);
     }
 
@@ -95,10 +95,58 @@ public class ApiRequest {
 
 
     // FARM REQUEST
+    public void GetFarm(int farmId, ApiRequestListener<Farm> callback){
 
-    public void GetFarms(PaginationParams paginationParams, ApiRequestListener<PaginationResult<Farm>> callback){
-        String url = API_URL + "/action/getFarm.php?page_size=" + paginationParams.PageSize + "&page_number=" + paginationParams.PageNumber;
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, API_URL + "/getFarm.php?id=" + farmId, new JSONObject(), response -> {
+            try {
+                if(response.getBoolean("success")){
+
+                    JSONObject entity = response.getJSONObject("entity");
+
+                    Location location = new Location();
+                    location.Address = entity.getString("address");
+                    location.ZipCode = entity.getString("zipCode");
+                    location.City = entity.getString("city");
+
+                    Farm farm = new Farm();
+                    farm.Name = entity.getString("name");
+                    farm.Description = entity.getString("description");
+                    farm.Rate = entity.getString("rate").equals("null") ? null : Float.parseFloat(entity.getString("rate"));
+                    farm.RateNumber = entity.getInt("rate_number");
+                    farm.Picture = BitmapUtil.StringToBitmap(entity.getString("picture"));
+                    farm.Location = location;
+
+                    for (String id : entity.getString("categories").split(",")) {
+                        farm.Categories.add(new Category(parseInt(id)));
+                    }
+
+                    callback.onComplete(farm, null);
+                }
+                else{
+                    callback.onComplete(null, response.getString("error"));
+                }
+            } catch (JSONException e) {
+                callback.onComplete(null, _context.getResources().getString(R.string.error_occured));
+                e.printStackTrace();
+            }
+        }, error -> {
+            callback.onComplete(null, String.valueOf(error));
+        }) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + _jwtToken);
+                return headers;
+            }
+        };
+        _databaseManager.queue.add(jsonObjectRequest);
+    }
+
+
+    public void GetFarms(PaginationParams paginationParams, @Nullable ArrayList<Integer> categoriesId, ApiRequestListener<PaginationResult<Farm>> callback){
+        String url = API_URL + "/action/getFarms.php?page_size=" + paginationParams.PageSize + "&page_number=" + paginationParams.PageNumber;
         if(paginationParams.Query != null) url = url + "&query=" + paginationParams.Query;
+        if(categoriesId != null && categoriesId.size() > 0) url = url + "&cId=" + categoriesId.toString();
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, new JSONObject(), response -> {
             try {
                 if(response.getBoolean("success")){
@@ -118,6 +166,7 @@ public class ApiRequest {
                         location.City = object.getString("city");
 
                         Farm farm = new Farm();
+                        farm.Id = object.getInt("id");
                         farm.Name = object.getString("name");
                         farm.Description = object.getString("description");
                         farm.Rate = object.getString("rate").equals("null") ? null : Float.parseFloat(object.getString("rate"));
@@ -196,13 +245,87 @@ public class ApiRequest {
 
     // CATEGORY REQUEST
 
-    public void GetMainCategories(){
-        List<Category> categoryies = new ArrayList<>();
-        categoryies.add(new Category("Légumes","", 45, 584));
-        categoryies.add(new Category("Fruits","", 164, 584));
-        categoryies.add(new Category("Produits laitiers","", 8133, 584));
-        categoryies.add(new Category("Viandes","", 18, 584));
+    public void GetMainCategories(ApiRequestListener<ArrayList<Category>> callback){
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, API_URL + "/action/getMainCategories.php", new JSONObject(), response -> {
+            try {
+                if(response.getBoolean("success")){
+                    ArrayList<Category> categories = new ArrayList<>();
 
+                    JSONArray entity = response.getJSONArray("entity");
+
+                    for(int i = 0; i < entity.length(); i++){
+                        JSONObject object = entity.getJSONObject(i);
+
+                        Category category = new Category();
+                        category.Name = object.getString("name");
+                        category.Picture = BitmapUtil.StringToBitmap(object.getString("picture"));
+                        category.FarmNumber = object.getInt("farm_count");
+
+                        categories.add(category);
+                    }
+
+                    callback.onComplete(categories, null);
+                }
+                else{
+                    callback.onComplete(null, response.getString("error"));
+                }
+            } catch (JSONException e) {
+                callback.onComplete(null, _context.getResources().getString(R.string.error_occured));
+                e.printStackTrace();
+            }
+        }, error -> {
+            callback.onComplete(null, String.valueOf(error));
+        }) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + _jwtToken);
+                return headers;
+            }
+        };
+        _databaseManager.queue.add(jsonObjectRequest);
+    }
+
+    public void GetFarmCategories(int farmId,boolean includeProducts , ApiRequestListener<ArrayList<Category>> callback){
+        String url = API_URL + "/action/getFarmCategories.php?id=" + farmId + "&wp=" + (includeProducts ? 1 : 0);
+        Log.d("url", url);
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, new JSONObject(), response -> {
+            try {
+                if(response.getBoolean("success")){
+                    ArrayList<Category> categories = new ArrayList<>();
+
+                    JSONArray entity = response.getJSONArray("entity");
+
+                    for(int i = 0; i < entity.length(); i++){
+                        JSONObject object = entity.getJSONObject(i);
+
+                        Category category = new Category();
+                        category.Name = object.getString("name");
+
+
+                        categories.add(category);
+                    }
+
+                    callback.onComplete(categories, null);
+                }
+                else{
+                    callback.onComplete(null, response.getString("error"));
+                }
+            } catch (JSONException e) {
+                callback.onComplete(null, _context.getResources().getString(R.string.error_occured));
+                e.printStackTrace();
+            }
+        }, error -> {
+            callback.onComplete(null, String.valueOf(error));
+        }) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + _jwtToken);
+                return headers;
+            }
+        };
+        _databaseManager.queue.add(jsonObjectRequest);
     }
 
 

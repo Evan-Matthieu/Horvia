@@ -75,7 +75,7 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        apiRequest.GetFarms(new PaginationParams(), new ApiRequestListener<PaginationResult<Farm>>() {
+        apiRequest.GetFarms(new PaginationParams(),null,  new ApiRequestListener<PaginationResult<Farm>>() {
             @Override
             public void onComplete(@Nullable PaginationResult<Farm> entity, String error) {
                 if(entity != null){
@@ -83,6 +83,14 @@ public class HomeFragment extends Fragment {
 
                     for (int i = 0; i < farmAdapter.getCount(); i++) {
                         View item = farmAdapter.getView(i, null, null);
+
+                        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                                LinearLayout.LayoutParams.MATCH_PARENT,
+                                LinearLayout.LayoutParams.WRAP_CONTENT
+                        );
+                        layoutParams.setMargins(0,0,0,40);
+                        item.setLayoutParams(layoutParams);
+
                         llFarmList.addView(item);
                         Farm farm = farmAdapter.getItem(i);
 
@@ -102,7 +110,6 @@ public class HomeFragment extends Fragment {
                 }
                 else{
                     Toast.makeText(container.getContext(),error, Toast.LENGTH_LONG).show();
-                    Log.d("errror de merde", error);
                 }
             }
         });

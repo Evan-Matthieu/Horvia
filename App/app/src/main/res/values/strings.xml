@@ -29,6 +29,13 @@
     <string name="error_occured">Une erreur est apparue</string>
     <string name="wrong_credentials">L\'identifiant ou le mot de passe fournit n\'est pas valide</string>
     <string name="retry_later">Rééssayez plus tard</string>
+    <string name="search_farm">Recherche une ferme</string>
+    <string name="see_more">Voir plus</string>
+    <string name="no_farm_found">Aucune ferme trouvée</string>
+    <string name="personnal_informations">Informations personnelles</string>
+    <string name="addresses">Adresses</string>
+    <string name="last_order">Dernières commandes</string>
+    <string name="logout">Deconnexion</string>
 
 
 </resources>
