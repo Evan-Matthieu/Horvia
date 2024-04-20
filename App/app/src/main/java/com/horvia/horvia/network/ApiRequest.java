@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import androidx.annotation.Nullable;
+
 import com.android.volley.Request;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.horvia.horvia.R;
@@ -141,9 +143,10 @@ public class ApiRequest {
     }
 
 
-    public void GetFarms(PaginationParams paginationParams, ApiRequestListener<PaginationResult<Farm>> callback){
+    public void GetFarms(PaginationParams paginationParams, @Nullable ArrayList<Integer> categoriesId, ApiRequestListener<PaginationResult<Farm>> callback){
         String url = API_URL + "/action/getFarms.php?page_size=" + paginationParams.PageSize + "&page_number=" + paginationParams.PageNumber;
         if(paginationParams.Query != null) url = url + "&query=" + paginationParams.Query;
+        if(categoriesId != null && categoriesId.size() > 0) url = url + "&cId=" + categoriesId.toString();
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, new JSONObject(), response -> {
             try {
                 if(response.getBoolean("success")){
@@ -170,8 +173,6 @@ public class ApiRequest {
                         farm.RateNumber = object.getInt("rate_number");
                         farm.Picture = BitmapUtil.StringToBitmap(object.getString("picture"));
                         farm.Location = location;
-
-                        Log.d("pictureUrl", String.valueOf(object.getString("picture").length()));
 
                         for (String id : object.getString("categories").split(",")) {
                             farm.Categories.add(new Category(parseInt(id)));

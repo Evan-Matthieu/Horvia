@@ -29,4 +29,7 @@
     <string name="error_occured">An error occured</string>
     <string name="wrong_credentials">Given email or password is invalid</string>
     <string name="retry_later">Try again Later</string>
+    <string name="search_farm">Search a farm</string>
+    <string name="see_more">See more</string>
+    <string name="no_farm_found">No farm found</string>
 </resources>

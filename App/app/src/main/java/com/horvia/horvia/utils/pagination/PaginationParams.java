@@ -7,9 +7,9 @@ import java.util.ArrayList;
 public class PaginationParams {
 
 
-    public PaginationParams(int pageNumber, int pageSize,String query){
-        this.PageNumber = pageNumber;
+    public PaginationParams(int pageSize, int pageNumber, String query){
         this.PageSize = pageSize;
+        this.PageNumber = pageNumber;
         this.Query = query;
     }
     public PaginationParams(){ }

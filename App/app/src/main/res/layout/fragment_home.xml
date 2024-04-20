@@ -37,13 +37,8 @@
                 android:layout_marginEnd="10dp"
                 android:background="@drawable/rounded_circle"
                 android:backgroundTint="@color/secondary"
-                android:drawableTop="@drawable/cart_item"
                 android:src="@drawable/cart"
-                android:textColor="@color/white"
                 app:tint="#FFFFFF"
-                app:itemIconTint="@color/white"
-                app:itemTextColor="@color/white"
-
                 app:layout_constraintBottom_toBottomOf="@+id/nav_top"
                 app:layout_constraintRight_toRightOf="@+id/nav_top"
                 app:layout_constraintTop_toTopOf="@+id/nav_top"/>
@@ -58,7 +53,7 @@
             android:layout_marginHorizontal="15dp"
             android:padding="25dp"
             android:layout_weight="1"
-            android:background="@drawable/home_main_categories"
+            android:background="@drawable/rounded_bg_white"
             android:id="@+id/main_categories_list">
         </LinearLayout>
 
