@@ -41,44 +41,33 @@ public class ApiRequest {
         _context = context;
         _databaseManager = new DatabaseManager(context);
 
-        SharedPreferences sharedPreferences = _context.getSharedPreferences("User_Login", Context.MODE_PRIVATE);
-        _jwtToken = sharedPreferences.getString("jwtToken", "");
     }
 
 
     // USER REQUESTS
 
-    public void TryLogin(String email, String password, ApiRequestListener<String> callback){
+    // USER REQUESTS
 
+    public void TryLogin(String email, String password, ApiRequestListener<String> callback){
         Map<String, String> params = new HashMap<>();
         params.put("email", email);
         params.put("password", password);
         JSONObject parameters = new JSONObject(params);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, API_URL + "/action/connectUser.php", parameters, response -> {
-            try {
-                Log.d("responseLogin", String.valueOf(response));
-                if(response.getBoolean("success")){
-                    callback.onComplete(response.getString("entity"), null);
-                }
-                else{
+            if (response != null) {
+                if (response.optBoolean("success")) {
+                    String token = response.optString("entity");
+                    callback.onComplete(token, null);
+                } else {
                     callback.onComplete(null, _context.getResources().getString(R.string.wrong_credentials));
                 }
-
-            } catch (JSONException e) {
+            } else {
                 callback.onComplete(null, _context.getResources().getString(R.string.error_occured));
-                e.printStackTrace();
             }
         }, error -> {
-            Log.d("errorNetwork", error.getMessage());
             callback.onComplete(null, _context.getResources().getString(R.string.retry_later));
-        }) {
-            @Override
-            public Map<String, String> getHeaders() {
-                Map<String, String> headers = new HashMap<>();
-                headers.put("Authorization", "Bearer " + _jwtToken);
-                return headers;
-            }
-        };
+        });
+
         _databaseManager.queue.add(jsonObjectRequest);
     }
 
