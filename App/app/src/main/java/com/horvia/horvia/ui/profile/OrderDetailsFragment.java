@@ -10,10 +10,10 @@ import android.view.ViewGroup;
 
 import com.horvia.horvia.R;
 
-public class LastOrdersFragment extends Fragment {
+public class OrderDetailsFragment extends Fragment {
 
 
-    public LastOrdersFragment() {
+    public OrderDetailsFragment() {
         // Required empty public constructor
     }
 
@@ -21,13 +21,15 @@ public class LastOrdersFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
 
+        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_last_orders, container, false);
-        return view;
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_order_details, container, false);
     }
 }

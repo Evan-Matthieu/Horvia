@@ -18,6 +18,7 @@ public class Order {
     public Date CreationDate;
     public Date CompletionDate;
     public OrderStatus Status;
+    public float TotalPrice;
     public Farm Farm;
     public User User;
 }

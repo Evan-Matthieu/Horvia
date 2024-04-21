@@ -14,6 +14,8 @@ import com.horvia.horvia.R;
 import com.horvia.horvia.models.Category;
 import com.horvia.horvia.models.Civility;
 import com.horvia.horvia.models.Location;
+import com.horvia.horvia.models.Order;
+import com.horvia.horvia.models.OrderStatus;
 import com.horvia.horvia.models.Product;
 import com.horvia.horvia.utils.BitmapUtil;
 import com.horvia.horvia.utils.DatabaseManager;
@@ -48,6 +50,7 @@ public class ApiRequest {
 
         SharedPreferences sharedPreferences = context.getSharedPreferences("User_Login", Context.MODE_PRIVATE);
         _jwtToken = sharedPreferences.getString("jwtToken", null);
+        Log.d("token", _jwtToken != null ? _jwtToken : "null");
     }
 
 
@@ -114,7 +117,6 @@ public class ApiRequest {
         JSONObject parameters = new JSONObject(params);
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, parameters, response -> {
-            Log.d("responseUpdate", response.toString());
             try {
                 if(response.getBoolean("success")){
                     callback.onComplete(response.getString("entity"), null);
@@ -161,6 +163,41 @@ public class ApiRequest {
                     location.FurtherDetails = entity.getString("further_details");
 
                     callback.onComplete(location, null);
+                }
+                else{
+                    callback.onComplete(null, response.getString("error"));
+                }
+            } catch (JSONException e) {
+                callback.onComplete(null, _context.getResources().getString(R.string.error_occured));
+                e.printStackTrace();
+            }
+        }, error -> {
+            callback.onComplete(null, String.valueOf(error));
+        }) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + _jwtToken);
+                return headers;
+            }
+        };
+        _databaseManager.queue.add(jsonObjectRequest);
+    }
+
+
+    public void UpdateUserAddress(Location location,ApiRequestListener<String> callback){
+        String url = API_URL + "/action/modifyAddresses.php";
+        Map<String, String> params = new HashMap<>();
+        params.put("address", location.Address);
+        params.put("city", location.City);
+        params.put("zipCode", location.ZipCode);
+        params.put("further_details", location.FurtherDetails);
+        JSONObject parameters = new JSONObject(params);
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, parameters, response -> {
+            try {
+                if(response.getBoolean("success")){
+                    callback.onComplete("", null);
                 }
                 else{
                     callback.onComplete(null, response.getString("error"));
@@ -410,6 +447,55 @@ public class ApiRequest {
         _databaseManager.queue.add(jsonObjectRequest);
     }
 
+
+    // ORDERS REQUEST
+
+
+    public void GetOrders(ApiRequestListener<ArrayList<Order>> callback){
+        String url = API_URL + "/action/getLastOrders.php";
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, new JSONObject(), response -> {
+            try {
+                if(response.getBoolean("success")){
+                    ArrayList<Order> orders = new ArrayList<>();
+
+                    JSONArray items = response.getJSONArray("entity");
+
+                    for(int i = 0; i < items.length(); i++){
+                        JSONObject object = items.getJSONObject(i);
+
+                        Farm farm = new Farm();
+                        farm.Picture = BitmapUtil.StringToBitmap(object.getString("picture"));
+
+                        Order order = new Order();
+                        order.Id = object.getInt("order_id");
+                        order.Status = OrderStatus.valueOf(object.getString("status"));
+                        order.TotalPrice = Float.parseFloat(object.getString("total_price"));
+                        order.Farm = farm;
+
+                        orders.add(order);
+                    }
+
+                    callback.onComplete(orders, null);
+                }
+                else{
+                    callback.onComplete(null, response.getString("error"));
+                }
+            } catch (JSONException e) {
+                callback.onComplete(null, _context.getResources().getString(R.string.error_occured));
+                e.printStackTrace();
+            }
+        }, error -> {
+            callback.onComplete(null, String.valueOf(error));
+        }) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + _jwtToken);
+                return headers;
+            }
+        };
+        _databaseManager.queue.add(jsonObjectRequest);
+    }
 
 
 }

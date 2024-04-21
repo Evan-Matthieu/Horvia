@@ -33,7 +33,7 @@
     <string name="see_more">Voir plus</string>
     <string name="no_farm_found">Aucune ferme trouvée</string>
     <string name="personnal_informations">Informations personnelles</string>
-    <string name="addresses">Adresses</string>
+    <string name="address">Adresse</string>
     <string name="last_order">Dernières commandes</string>
     <string name="logout">Deconnexion</string>
     <string name="year">ans</string>
@@ -45,6 +45,13 @@
     <string name="your_password_has_been_modified">Votre mot de passe a été modifié</string>
     <string name="modify_my_password">Modifier mon mot de passe</string>
     <string name="informations_updated">Informations mises à jour</string>
-
+    <string name="city">Ville</string>
+    <string name="zip_code">Code postal</string>
+    <string name="further_details">Informations supplémentaires</string>
+    <string name="street_number_street_name">N° de rue, Nom de rue</string>
+    <string name="zip_code_must_be_5">Un code postal doit contenir 5 chiffres</string>
+    <string name="address_modified">Addresse modifiée</string>
+    <string name="ongoing">En cours</string>
+    <string name="completed">Complétée</string>
 
 </resources>

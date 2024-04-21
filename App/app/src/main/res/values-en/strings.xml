@@ -34,7 +34,7 @@
     <string name="no_farm_found">No farm found</string>
     <string name="last_order">Last orders</string>
     <string name="personnal_informations">Personnal informations</string>
-    <string name="addresses">Addresses</string>
+    <string name="address">Address</string>
     <string name="logout">Logout</string>
     <string name="year">years old</string>
     <string name="save">Save</string>
@@ -45,4 +45,12 @@
     <string name="your_password_has_been_modified">Your password has been modified</string>
     <string name="modify_my_password">Modify my password</string>
     <string name="informations_updated">Informations has been updated</string>
+    <string name="city">City</string>
+    <string name="zip_code">Zip Code</string>
+    <string name="further_details">Further Details</string>
+    <string name="street_number_street_name">Street number, Stree name</string>
+    <string name="zip_code_must_be_5">A zip code must be 5 numbers</string>
+    <string name="address_modified">Address modified</string>
+    <string name="ongoing">Ongoing</string>
+    <string name="completed">Cmpleted</string>
 </resources>

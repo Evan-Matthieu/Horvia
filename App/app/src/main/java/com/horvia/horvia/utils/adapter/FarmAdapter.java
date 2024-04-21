@@ -56,10 +56,6 @@ public class FarmAdapter extends BaseAdapter {
             LinearLayout layout = view.findViewById(R.id.farms_list_layout);
 
             layout.removeView(view.findViewById(R.id.farm_rate_list_container));
-
-            //ratingBar.setVisibility(View.INVISIBLE);
-            //ratingBarValue.setVisibility(View.INVISIBLE);
-            //ratingBarNumber.setVisibility(View.INVISIBLE);
         }
         else{
             ratingBar.setRating(farms.get(i).Rate);
