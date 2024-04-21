@@ -6,8 +6,24 @@
     tools:context=".ui.profile.AddressFragment">
 
     <TextView
+        android:id="@+id/address_address"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/addresses" />
+        android:layout_marginTop="15dp"/>
+    <TextView
+        android:id="@+id/address_zipcode"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="30dp"/>
+    <TextView
+        android:id="@+id/address_city"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="45dp"/>
+    <TextView
+        android:id="@+id/address_details"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="60dp"/>
 
 </FrameLayout>

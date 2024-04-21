@@ -100,6 +100,50 @@ public class ApiRequest {
         _databaseManager.queue.add(jsonObjectRequest);
     }
 
+
+
+    public void GetAddresses(ApiRequestListener<Location> callback){
+        String url = API_URL + "/action/getAddresses.php";
+
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, new JSONObject(), response -> {
+            try {
+                if(response.getBoolean("success")){
+                    JSONObject entity = response.getJSONObject("entity");
+
+
+                    Location location = new Location();
+
+                    location.Address = entity.getString("address");
+                    location.City = entity.getString("city");
+                    location.ZipCode = entity.getString("zip_code");
+                    location.FurtherDetails = entity.getString("further_details");
+
+                    callback.onComplete(location, null);
+                }
+                else{
+                    callback.onComplete(null, response.getString("error"));
+                }
+            } catch (JSONException e) {
+                callback.onComplete(null, _context.getResources().getString(R.string.error_occured));
+                e.printStackTrace();
+            }
+        }, error -> {
+            callback.onComplete(null, String.valueOf(error));
+        }) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + _jwtToken);
+                return headers;
+            }
+        };
+        _databaseManager.queue.add(jsonObjectRequest);
+    }
+
+
+
+
     // USER REQUESTS
 
     public void TryLogin(String email, String password, ApiRequestListener<String> callback){
