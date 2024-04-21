@@ -144,16 +144,44 @@
                 android:textColor="@color/white"/>
         </LinearLayout>
 
-        <Spinner
-            android:id="@+id/civility"
+        <RadioGroup
+            android:layout_marginTop="15dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/background_edittext"
-            android:hint="@string/civility"
-            android:inputType="text"
-            android:spinnerMode="dropdown"
-            android:textColorHint="@color/grey" />
+            android:orientation="horizontal">
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:id="@+id/civility_madam"
+                android:textColor="@color/white"
+                android:checked="true"
+                android:text="@string/madam" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:id="@+id/civility_mister"
+                android:textColor="@color/white"
+                android:text="@string/mister" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+        </RadioGroup>
 
         <EditText
             android:id="@+id/firstname"

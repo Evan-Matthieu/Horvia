@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.util.Patterns;
 import android.widget.TextView;
@@ -39,10 +40,10 @@ import java.util.Map;
 import java.util.regex.Pattern;
 import java.text.SimpleDateFormat;
 
-public class RegisterActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class RegisterActivity extends AppCompatActivity {
     private User user;
     private EditText etEmail, etPassword, etConfirmPassword, etFirstname, etLastname, etPhoneNumber;
-    private Spinner spinCivility;
+    private RadioButton civilityMadam, civilityMister;
 
     private DatePicker dpBirthDate;
     private TextView errorCreateAccountTextView;
@@ -69,9 +70,8 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
         dpBirthDate = findViewById(R.id.birth_date);
         errorCreateAccountTextView = findViewById(R.id.errorCreateAccountTextView);
 
-        spinCivility = findViewById(R.id.civility);
-
-        SetCivilitySpinnerValues();
+        civilityMadam = findViewById(R.id.civility_madam);
+        civilityMister = findViewById(R.id.civility_mister);
 
         databaseManager = new DatabaseManager(getApplicationContext());
     }
@@ -85,15 +85,6 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
         Intent myIntent = new Intent(this, LoginActivity.class);
         startActivity(myIntent);
         finish();
-    }
-
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-
     }
 
     public void OnSubmitRegister(View view){
@@ -130,7 +121,7 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
 
             email = etEmail.getText().toString();
             password = etPassword.getText().toString();
-            civility = String.valueOf(Civility.values()[spinCivility.getSelectedItemPosition()]);
+            civility = String.valueOf( civilityMadam.isChecked() ? Civility.MADAM : Civility.MISTER);
             firstname = etFirstname.getText().toString();
             lastname = etLastname.getText().toString();
             phone = etPhoneNumber.getText().toString();
@@ -142,22 +133,6 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
         }
 
 
-    }
-
-    private void SetCivilitySpinnerValues(){
-        spinCivility.setOnItemSelectedListener(this);
-
-        List<String> civilityList = new ArrayList<>();
-        for (Civility civility : Civility.values()) {
-            civilityList.add(getString(civility.getLabel()));
-        }
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_spinner_item, civilityList);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        spinCivility.setSelection(0);
-        spinCivility.setAdapter(adapter);
     }
 
     public void onApiResponse(JSONObject response) {

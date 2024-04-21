@@ -44,6 +44,7 @@
     <string name="confirm">Confirmer</string>
     <string name="your_password_has_been_modified">Votre mot de passe a été modifié</string>
     <string name="modify_my_password">Modifier mon mot de passe</string>
+    <string name="informations_updated">Informations mises à jour</string>
 
 
 </resources>

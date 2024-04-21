@@ -44,4 +44,5 @@
     <string name="confirm">Confirm</string>
     <string name="your_password_has_been_modified">Your password has been modified</string>
     <string name="modify_my_password">Modify my password</string>
+    <string name="informations_updated">Informations has been updated</string>
 </resources>

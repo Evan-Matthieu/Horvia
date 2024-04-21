@@ -100,6 +100,47 @@ public class ApiRequest {
         _databaseManager.queue.add(jsonObjectRequest);
     }
 
+    public void UpdateUserPersonnalInformations(User user,ApiRequestListener<String> callback){
+        String url = API_URL + "/action/modifyUser.php";
+        Map<String, String> params = new HashMap<>();
+        params.put("firstname", user.FirstName);
+        params.put("lastname", user.Lastname);
+        params.put("email", user.Email);
+        params.put("phone", user.PhoneNumber);
+
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        params.put("birth", formatter.format(user.BirthDate));
+        params.put("civility", user.Civility.toString());
+        JSONObject parameters = new JSONObject(params);
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, parameters, response -> {
+            Log.d("responseUpdate", response.toString());
+            try {
+                if(response.getBoolean("success")){
+                    callback.onComplete(response.getString("entity"), null);
+                }
+                else{
+                    callback.onComplete(null, response.getString("error"));
+                }
+            } catch (JSONException e) {
+                callback.onComplete(null, _context.getResources().getString(R.string.error_occured));
+                e.printStackTrace();
+            }
+        }, error -> {
+            callback.onComplete(null, String.valueOf(error));
+        }) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + _jwtToken);
+                return headers;
+            }
+        };
+        _databaseManager.queue.add(jsonObjectRequest);
+    }
+
+
+
 
 
     public void GetAddresses(ApiRequestListener<Location> callback){
