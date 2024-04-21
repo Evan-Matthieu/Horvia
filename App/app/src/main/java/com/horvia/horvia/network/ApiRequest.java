@@ -14,6 +14,7 @@ import com.horvia.horvia.R;
 import com.horvia.horvia.models.Category;
 import com.horvia.horvia.models.Civility;
 import com.horvia.horvia.models.Location;
+import com.horvia.horvia.models.MeasuringUnit;
 import com.horvia.horvia.models.Order;
 import com.horvia.horvia.models.OrderStatus;
 import com.horvia.horvia.models.Product;
@@ -406,12 +407,12 @@ public class ApiRequest {
         _databaseManager.queue.add(jsonObjectRequest);
     }
 
-    public void GetFarmCategories(int farmId,boolean includeProducts , ApiRequestListener<ArrayList<Category>> callback){
-        String url = API_URL + "/action/getFarmCategories.php?id=" + farmId + "&wp=" + (includeProducts ? 1 : 0);
+    public void GetFarmCategories(int farmId, ApiRequestListener<ArrayList<Category>> callback){
+        String url = API_URL + "/action/getFarmCategories.php?id=" + farmId;
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, new JSONObject(), response -> {
             try {
                 if(response.getBoolean("success")){
-                    ArrayList<Category> categories = new ArrayList<>();
+                    ArrayList<Product> products = new ArrayList<>();
 
                     JSONArray entity = response.getJSONArray("entity");
 
@@ -421,10 +422,30 @@ public class ApiRequest {
                         Category category = new Category();
                         category.Name = object.getString("name");
 
-
-                        categories.add(category);
+                        Product product = new Product();
+                        product.Name = object.getString("productName");
+                        product.Description = object.getString("productDescription");
+                        product.UnitPrice = Float.parseFloat(object.getString("productUnitPrice"));
+                        Log.d("measuringUnit", object.getString("productMeasuringUnit"));
+                        product.MeasuringUnit = MeasuringUnit.valueOf(object.getString("productMeasuringUnit"));
+                        product.Picture = BitmapUtil.StringToBitmap(object.getString("productPicture"));
+                        product.Category = category;
+                        products.add(product);
                     }
 
+                    Map<String, Category> categoryMap = new HashMap<>();
+
+                    for (Product product : products) {
+                        String categoryName = product.Category.Name;
+                        Category category = categoryMap.get(categoryName);
+                        if (category == null) {
+                            category = new Category();
+                            category.Name = categoryName;
+                            categoryMap.put(categoryName, category);
+                        }
+                        category.Products.add(product);
+                    }
+                    ArrayList<Category> categories = new ArrayList<>(categoryMap.values());
                     callback.onComplete(categories, null);
                 }
                 else{

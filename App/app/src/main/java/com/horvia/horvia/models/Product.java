@@ -13,11 +13,13 @@ public class Product {
 
     /* FOREIGN KEY */
     public int FarmId;
+    public int CategoryId;
 
     /* PROPERTIES */
     public String Name;
     public String Description;
     public float UnitPrice;
     public MeasuringUnit MeasuringUnit;
+    public Category Category;
     public Bitmap Picture;
 }

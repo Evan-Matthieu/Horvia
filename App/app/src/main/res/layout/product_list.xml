@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/farms_list_layout"
+    android:id="@+id/products_list_layout"
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -10,44 +10,45 @@
     android:padding="15dp">
 
     <ImageView
-        android:id="@+id/order_picture"
+        android:id="@+id/product_picture"
         android:layout_width="70dp"
         android:layout_height="70dp"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/order"
+        android:id="@+id/product"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/order_id"
-            app:layout_constraintTop_toTopOf="@+id/order"
-            app:layout_constraintLeft_toLeftOf="@+id/order"
+            android:id="@+id/product_name"
+            app:layout_constraintTop_toTopOf="@+id/product"
+            app:layout_constraintLeft_toLeftOf="@+id/product"
             android:textStyle="bold"
             android:textSize="20sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
         <TextView
-            android:id="@+id/order_farm_name"
-            app:layout_constraintTop_toBottomOf="@+id/order_id"
-            app:layout_constraintLeft_toLeftOf="@+id/order"
-            android:maxLines="1"
+            android:id="@+id/product_description"
+            app:layout_constraintTop_toBottomOf="@+id/product_name"
+            app:layout_constraintLeft_toLeftOf="@+id/product"
+            android:maxLines="3"
             android:ellipsize="end"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
         <TextView
-            android:id="@+id/order_status"
-            app:layout_constraintTop_toBottomOf="@+id/order_farm_name"
-            app:layout_constraintLeft_toLeftOf="@+id/order"
+            android:id="@+id/product_unit_type"
+            app:layout_constraintTop_toBottomOf="@+id/product_description"
+            app:layout_constraintLeft_toLeftOf="@+id/product"
+            android:textColor="@color/grey"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
         <TextView
-            android:id="@+id/order_total_price"
-            app:layout_constraintBottom_toBottomOf="@+id/order"
-            app:layout_constraintRight_toRightOf="@+id/order"
+            android:id="@+id/product_price"
+            app:layout_constraintBottom_toBottomOf="@+id/product"
+            app:layout_constraintRight_toRightOf="@+id/product"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 

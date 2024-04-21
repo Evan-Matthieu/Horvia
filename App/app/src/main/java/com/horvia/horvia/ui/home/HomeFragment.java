@@ -1,16 +1,15 @@
 package com.horvia.horvia.ui.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.Space;
 import android.widget.Toast;
 
 import com.horvia.horvia.R;
@@ -18,7 +17,7 @@ import com.horvia.horvia.models.Category;
 import com.horvia.horvia.models.Farm;
 import com.horvia.horvia.network.ApiRequest;
 import com.horvia.horvia.network.ApiRequestListener;
-import com.horvia.horvia.ui.farms.FarmDetailFragment;
+import com.horvia.horvia.ui.farms.FarmDetailsActivity;
 import com.horvia.horvia.ui.search.SearchFragment;
 import com.horvia.horvia.utils.adapter.FarmAdapter;
 import com.horvia.horvia.utils.adapter.MainCategoryAdapter;
@@ -94,16 +93,11 @@ public class HomeFragment extends Fragment {
                         Farm farm = farmAdapter.getItem(i);
 
                         item.setOnClickListener(view -> {
-                            FarmDetailFragment fragment = new FarmDetailFragment();
-                            Bundle args = new Bundle();
-                            args.putInt("id", farm.Id);
-                            args.putString("name", farm.Name);
-                            fragment.setArguments(args);
+                            Intent intent = new Intent(getActivity(), FarmDetailsActivity.class);
+                            intent.putExtra("id", farm.Id);
+                            intent.putExtra("name", farm.Name);
+                            startActivity(intent);
 
-                            getParentFragmentManager().beginTransaction()
-                                    .replace(R.id.mainContentFragment, fragment)
-                                    .addToBackStack(null)
-                                    .commit();
                         });
                     }
                 }

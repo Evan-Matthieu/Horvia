@@ -48,11 +48,13 @@ public class OrderAdapter extends BaseAdapter {
         ImageView farmPicture = view.findViewById(R.id.order_picture);
         TextView orderId = view.findViewById(R.id.order_id);
         TextView status = view.findViewById(R.id.order_status);
+        TextView farmName = view.findViewById(R.id.order_farm_name);
         TextView totalPrice = view.findViewById(R.id.order_total_price);
 
         farmPicture.setImageBitmap(orders.get(i).Farm.Picture);
         orderId.setText("N° " + orders.get(i).Id);
         status.setText("Status : " + orders.get(i).Status.getLabel(context));
+        farmName.setText(orders.get(i).Farm.Name);
         totalPrice.setText(orders.get(i).TotalPrice + "€");
 
         return view;

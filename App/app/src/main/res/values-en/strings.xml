@@ -53,4 +53,7 @@
     <string name="address_modified">Address modified</string>
     <string name="ongoing">Ongoing</string>
     <string name="completed">Cmpleted</string>
+    <string name="litre">Litre (l)</string>
+    <string name="weight">Weight (g)</string>
+    <string name="number">Number</string>
 </resources>

@@ -12,12 +12,9 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.horvia.horvia.R;
-import com.horvia.horvia.models.Farm;
 import com.horvia.horvia.models.Order;
 import com.horvia.horvia.network.ApiRequest;
 import com.horvia.horvia.network.ApiRequestListener;
-import com.horvia.horvia.ui.farms.FarmDetailFragment;
-import com.horvia.horvia.utils.adapter.FarmAdapter;
 import com.horvia.horvia.utils.adapter.OrderAdapter;
 
 import java.util.ArrayList;

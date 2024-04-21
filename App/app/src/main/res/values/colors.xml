@@ -4,6 +4,7 @@
     <color name="secondary">#FF9800</color>
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
+    <color name="grey_light">#DDDDDD</color>
     <color name="grey">#CCCCCC</color>
     <color name="grey_bold">#808080</color>
     <color name="error">#F84F56</color>

@@ -53,5 +53,8 @@
     <string name="address_modified">Addresse modifiée</string>
     <string name="ongoing">En cours</string>
     <string name="completed">Complétée</string>
+    <string name="litre">Litre (l)</string>
+    <string name="weight">Poids (g)</string>
+    <string name="number">Nombre</string>
 
 </resources>
