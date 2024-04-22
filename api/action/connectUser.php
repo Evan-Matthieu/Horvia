@@ -2,6 +2,7 @@
 
 header('Content-Type: application/json');
 include_once '../config/Database.php';
+include_once '../auth/generate_token.php';
 
 $json = json_decode(file_get_contents('php://input'), true);
 
@@ -17,6 +18,7 @@ if (isset($json['email']) && isset($json['password'])) {
 
         if (password_verify($password, $user['password'])) {
             $result["success"] = true;
+            $result["entity"] = generateJWT($email);
         } else {
             $result["success"] = false;
             $result["error"] = "Mot de passe incorrect";
@@ -30,4 +32,4 @@ if (isset($json['email']) && isset($json['password'])) {
     $result["error"] = "Champs non remplis";
 }
 
-echo json_encode($result);
+echo json_encode($result, JSON_PRETTY_PRINT);
