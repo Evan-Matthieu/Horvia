@@ -11,7 +11,10 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.horvia.horvia.R;
 import com.horvia.horvia.models.Location;
@@ -24,7 +27,8 @@ import java.util.Calendar;
 
 public class AddressFragment extends Fragment {
     private ApiRequest apiRequest;
-    private TextView address, city, zipCode, furtherDetails;
+    private EditText address, city, zipCode, furtherDetails;
+    private Button submitButton;
 
     public AddressFragment() {
         // Required empty public constructor
@@ -40,12 +44,51 @@ public class AddressFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view =  inflater.inflate(R.layout.fragment_address, container, false);
 
-        address = view.findViewById(R.id.address_address);
-        city = view.findViewById(R.id.address_city);
-        zipCode = view.findViewById(R.id.address_zipcode);
-        furtherDetails = view.findViewById(R.id.address_details);
+        address = view.findViewById(R.id.street);
+        city = view.findViewById(R.id.city);
+        zipCode = view.findViewById(R.id.zip_code);
+        furtherDetails = view.findViewById(R.id.further_details);
+        submitButton = view.findViewById(R.id.submit_address);
 
         apiRequest = new ApiRequest(getContext());
+
+        submitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(address.length() == 0){
+                    address.setError(getResources().getString(R.string.required_field));
+                }
+                else if(city.length() == 0){
+                    city.setError(getResources().getString(R.string.required_field));
+                }
+                else if(zipCode.length() == 0){
+                    zipCode.setError(getResources().getString(R.string.required_field));
+                }
+                else if(zipCode.length() != 5){
+                    zipCode.setError(getResources().getString(R.string.zip_code_must_be_5));
+                }
+                else {
+                    Location location = new Location();
+                    location.Address = address.getText().toString();
+                    location.City = city.getText().toString();
+                    location.ZipCode = zipCode.getText().toString();
+                    location.FurtherDetails = furtherDetails.getText().toString();
+
+                    apiRequest.UpdateUserAddress(location, new ApiRequestListener<String>() {
+                        @Override
+                        public void onComplete(@Nullable String entity, String error) {
+                            if(entity != null){
+                                Toast.makeText(getContext(), R.string.address_modified, Toast.LENGTH_LONG).show();
+                            }
+                            else{
+                                Toast.makeText(getContext(), error, Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    });
+                }
+            }
+        });
+
         apiRequest.GetAddresses(new ApiRequestListener<Location>() {
 
             @Override

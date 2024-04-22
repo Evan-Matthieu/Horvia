@@ -4,8 +4,7 @@
     android:id="@+id/products_list_layout"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center_vertical"
+    android:layout_height="wrap_content"
     android:background="@drawable/rounded_border_grey"
     android:padding="15dp">
 
@@ -17,7 +16,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/product"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/product_name"
@@ -32,7 +31,7 @@
             android:id="@+id/product_description"
             app:layout_constraintTop_toBottomOf="@+id/product_name"
             app:layout_constraintLeft_toLeftOf="@+id/product"
-            android:maxLines="3"
+            android:maxLines="5"
             android:ellipsize="end"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
@@ -47,6 +46,7 @@
 
         <TextView
             android:id="@+id/product_price"
+            app:layout_constraintTop_toBottomOf="@+id/product_unit_type"
             app:layout_constraintBottom_toBottomOf="@+id/product"
             app:layout_constraintRight_toRightOf="@+id/product"
             android:layout_width="wrap_content"

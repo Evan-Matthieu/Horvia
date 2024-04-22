@@ -5,7 +5,7 @@ import android.content.Context;
 import com.horvia.horvia.R;
 
 public enum MeasuringUnit {
-    LITRE(R.string.litre), WEIGHT(R.string.weight), NUMBER(R.string.number);
+    LITRE(R.string.price_litre), WEIGHT(R.string.price_weight), NUMBER(R.string.price_number);
 
     private final int label;
 

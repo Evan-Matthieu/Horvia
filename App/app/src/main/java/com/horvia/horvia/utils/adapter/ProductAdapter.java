@@ -45,15 +45,14 @@ public class ProductAdapter extends BaseAdapter {
         view = inflater.inflate(R.layout.product_list, null);
         ImageView productPicture = view.findViewById(R.id.product_picture);
         TextView productName = view.findViewById(R.id.product_name);
-        TextView productDescription = view.findViewById(R.id.product_description);
         TextView productUnitType = view.findViewById(R.id.product_unit_type);
         TextView productPrice = view.findViewById(R.id.product_price);
 
         productPicture.setImageBitmap(products.get(i).Picture);
         productName.setText(products.get(i).Name);
-        productDescription.setText(products.get(i).Description);
-        productUnitType.setText("Prix au " + products.get(i).MeasuringUnit.getLabel(context));
+        productUnitType.setText(products.get(i).MeasuringUnit.getLabel(context));
         productPrice.setText(products.get(i).UnitPrice + "€");
+
 
         return view;
     }

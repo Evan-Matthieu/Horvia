@@ -423,6 +423,7 @@ public class ApiRequest {
                         category.Name = object.getString("name");
 
                         Product product = new Product();
+                        product.Id = object.getInt("productId");
                         product.Name = object.getString("productName");
                         product.Description = object.getString("productDescription");
                         product.UnitPrice = Float.parseFloat(object.getString("productUnitPrice"));
@@ -507,6 +508,40 @@ public class ApiRequest {
             }
         }, error -> {
             callback.onComplete(null, String.valueOf(error));
+        }) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + _jwtToken);
+                return headers;
+            }
+        };
+        _databaseManager.queue.add(jsonObjectRequest);
+    }
+
+
+    public void AddProductToCart(int productId, double quantity , ApiRequestListener<String> callback) {
+
+        Map<String, String> params = new HashMap<>();
+        params.put("id", String.valueOf(productId));
+        params.put("quantity", String.valueOf(quantity));
+        JSONObject parameters = new JSONObject(params);
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, API_URL + "/action/createCart.php", parameters, response -> {
+            try {
+                if(response.getBoolean("success")){
+                    callback.onComplete("", null);
+                }
+                else{
+                    callback.onComplete(null, response.getString("error"));
+                }
+
+            } catch (JSONException e) {
+                callback.onComplete(null, _context.getResources().getString(R.string.error_occured));
+                e.printStackTrace();
+            }
+        }, error -> {
+            callback.onComplete(null, _context.getResources().getString(R.string.retry_later));
         }) {
             @Override
             public Map<String, String> getHeaders() {

@@ -53,8 +53,11 @@
     <string name="address_modified">Addresse modifiée</string>
     <string name="ongoing">En cours</string>
     <string name="completed">Complétée</string>
-    <string name="litre">Litre (l)</string>
-    <string name="weight">Poids (g)</string>
-    <string name="number">Nombre</string>
+    <string name="add">Ajouter</string>
+    <string name="price_number">Prix à l\'unité</string>
+    <string name="price_weight">Prix au kg</string>
+    <string name="price_litre">Prix au litre</string>
+    <string name="cancel">Annuler</string>
+    <string name="product_add_to_cart">Produit ajouté au panier</string>
 
 </resources>

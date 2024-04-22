@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/transparent"
+    android:padding="15dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="25dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:background="@drawable/rounded_bg_white">
+
+        <LinearLayout
+            android:id="@+id/product"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="25dp"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/remove"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:textColor="@color/white"
+                app:tint="#FFFFFF"/>
+
+            <TextView
+                android:id="@+id/quantity"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:paddingHorizontal="10dp"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:textColor="@color/black"/>
+
+            <Button
+                android:id="@+id/add"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:backgroundTint="@color/secondary"
+                android:textColor="@color/white"
+                app:tint="#FFFFFF"/>
+
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/total_price"
+            android:layout_marginTop="25dp"
+            android:textStyle="bold"
+            android:textSize="24sp"
+            android:text="0€"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/grey"
+                android:textColor="@color/white"
+                android:layout_marginTop="30dp"
+                android:text="@string/cancel"
+                android:paddingHorizontal="15dp"
+                android:layout_marginRight="20dp"
+                android:textAllCaps="false"
+                android:textStyle="bold"
+                android:textSize="18sp" />
+
+            <Button
+                android:id="@+id/add_to_cart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/secondary"
+                android:textColor="@color/white"
+                android:layout_marginTop="30dp"
+                android:text="@string/add"
+                android:paddingHorizontal="15dp"
+                android:textAllCaps="false"
+                android:textStyle="bold"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</LinearLayout>
