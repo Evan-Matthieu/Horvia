@@ -265,10 +265,10 @@ public class ApiRequest {
 
     // Farm Request
 
-    public void GetFarms(PaginationParams paginationParams, @Nullable ArrayList<Integer> categoriesId, ApiRequestListener<PaginationResult<Farm>> callback){
+    public void GetFarms(PaginationParams paginationParams, @Nullable Integer categoriyId, ApiRequestListener<PaginationResult<Farm>> callback){
         String url = API_URL + "/action/getFarms.php?page_size=" + paginationParams.PageSize + "&page_number=" + paginationParams.PageNumber;
         if(paginationParams.Query != null) url = url + "&query=" + paginationParams.Query;
-        if(categoriesId != null && categoriesId.size() > 0) url = url + "&cId=" + categoriesId.toString();
+        if(categoriyId != null) url = url + "&cId=" + categoriyId;
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, new JSONObject(), response -> {
             try {
                 if(response.getBoolean("success")){
@@ -295,10 +295,6 @@ public class ApiRequest {
                         farm.RateNumber = object.getInt("rate_number");
                         farm.Picture = BitmapUtil.StringToBitmap(object.getString("picture"));
                         farm.Location = location;
-
-                        for (String id : object.getString("categories").split(",")) {
-                            farm.Categories.add(new Category(parseInt(id)));
-                        }
 
                         result.Items.add(farm);
                     }
@@ -379,6 +375,7 @@ public class ApiRequest {
                         JSONObject object = entity.getJSONObject(i);
 
                         Category category = new Category();
+                        category.Id = object.getInt("id");
                         category.Name = object.getString("name");
                         category.Picture = BitmapUtil.StringToBitmap(object.getString("picture"));
                         category.FarmNumber = object.getInt("farm_count");

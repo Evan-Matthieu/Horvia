@@ -38,7 +38,7 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
 
-        ApiRequest apiRequest = new ApiRequest(rootView.getContext());
+        ApiRequest apiRequest = new ApiRequest(getContext());
 
         llFarmList = rootView.findViewById(R.id.farm_list);
         llMainCategories = rootView.findViewById(R.id.main_categories_list);
