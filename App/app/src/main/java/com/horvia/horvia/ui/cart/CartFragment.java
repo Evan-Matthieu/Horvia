@@ -1,12 +1,10 @@
 package com.horvia.horvia.ui.cart;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,25 +17,24 @@ import android.widget.Toast;
 
 import com.horvia.horvia.R;
 import com.horvia.horvia.models.Cart;
-import com.horvia.horvia.models.Farm;
 import com.horvia.horvia.network.ApiRequest;
 import com.horvia.horvia.network.ApiRequestListener;
-import com.horvia.horvia.ui.farms.FarmDetailsActivity;
 import com.horvia.horvia.ui.profile.OrdersFragment;
-import com.horvia.horvia.ui.profile.PersonnalInformationsFragment;
 import com.horvia.horvia.ui.profile.ProfileFragment;
 import com.horvia.horvia.utils.adapter.CartAdapter;
-import com.horvia.horvia.utils.adapter.ProductAdapter;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class CartFragment extends Fragment {
 
     private ApiRequest apiRequest;
-    private ImageView farmPicture;
-    private TextView farmName;
-    private LinearLayout productsList;
+    private TextView cartEmpty;
+    private LinearLayout orderDetails;
     private Button validateCart;
+
+    ArrayList<Cart> carts = new ArrayList<>();
 
     public CartFragment() {
         // Required empty public constructor
@@ -48,18 +45,38 @@ public class CartFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_cart, container, false);
-        farmName = view.findViewById(R.id.farm_name);
-        farmPicture = view.findViewById(R.id.farm_picture);
+        cartEmpty = view.findViewById(R.id.cart_empty);
+        orderDetails = view.findViewById(R.id.order_details);
         validateCart = view.findViewById(R.id.validate_cart);
-
-        productsList = view.findViewById(R.id.products_list);
 
         apiRequest = new ApiRequest(getContext());
 
         apiRequest.GetCartProducts(new ApiRequestListener<ArrayList<Cart>>() {
             @Override
             public void onComplete(@Nullable ArrayList<Cart> entity, String error) {
-                if(entity != null){
+                if(entity != null && entity.size() == 0){
+                    cartEmpty.setVisibility(View.VISIBLE);
+                }
+                else if(entity != null && entity.size() > 0){
+                    orderDetails.setVisibility(View.VISIBLE);
+
+                    LinearLayout orderDetailsLayout = view.findViewById(R.id.order_details);
+
+                    View orderDetailsView = inflater.inflate(R.layout.order_details, null);
+                    orderDetailsLayout.addView(orderDetailsView);
+
+                    TextView farmName = orderDetailsView.findViewById(R.id.farm_name);
+                    ImageView farmPicture = orderDetailsView.findViewById(R.id.farm_picture);
+                    LinearLayout productsList = orderDetailsView.findViewById(R.id.products_list);
+                    TextView totalPrice = orderDetailsView.findViewById(R.id.total_price);
+
+
+
+                    double cartTotalPriceValue = 0.00;
+
+                    carts = entity;
+                    orderDetails.setVisibility(View.VISIBLE);
+
                     farmName.setText(entity.get(0).Product.Farm.Name);
                     farmPicture.setImageBitmap(entity.get(0).Product.Farm.Picture);
 
@@ -86,8 +103,13 @@ public class CartFragment extends Fragment {
                                     @Override
                                     public void onComplete(@Nullable String entity, String error) {
                                         if(entity != null){
-                                            Toast.makeText(getContext(), R.string.product_deleted, Toast.LENGTH_LONG).show();
                                             productsList.removeView(contentView);
+                                            carts.removeIf(cart -> cart.Id == cartId);
+
+                                            if(carts.size() == 0){
+                                                orderDetails.setVisibility(View.GONE);
+                                                cartEmpty.setVisibility(View.VISIBLE);
+                                            }
                                         }
                                         else{
                                             Toast.makeText(getContext(), R.string.error_occured, Toast.LENGTH_LONG).show();
@@ -98,7 +120,13 @@ public class CartFragment extends Fragment {
                         });
 
                         productsList.addView(contentView);
+                        cartTotalPriceValue += cartAdapter.getItem(i).Quantity * cartAdapter.getItem(i).Product.UnitPrice;
+
                     }
+                    DecimalFormat dc = new DecimalFormat("#.##");
+                    dc.setRoundingMode(RoundingMode.UP);
+
+                    totalPrice.setText("Total : " + dc.format(cartTotalPriceValue) + "€");
                 }
             }
         });
@@ -112,9 +140,8 @@ public class CartFragment extends Fragment {
                         if(entity != null){
                             getParentFragmentManager().beginTransaction()
                                     .replace(R.id.mainContentFragment, new OrdersFragment())
-                                    .addToBackStack(null)
+                                    .addToBackStack(ProfileFragment.class.toString())
                                     .commit();
-                            Toast.makeText(getContext(), R.string.validate_cart, Toast.LENGTH_LONG).show();
                         }
                         else{
                             Toast.makeText(getContext(), R.string.error_occured, Toast.LENGTH_LONG).show();

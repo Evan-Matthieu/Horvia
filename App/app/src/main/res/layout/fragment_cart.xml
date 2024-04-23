@@ -27,72 +27,34 @@
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/validate_cart"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone"
+        android:id="@+id/order_details" >
+
+        <Button
+            android:id="@+id/validate_cart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/secondary"
+            android:paddingHorizontal="30dp"
+            android:textAllCaps="false"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:text="@string/validate_cart" />
+    </LinearLayout>
+
+
+
+    <TextView
+        android:id="@+id/cart_empty"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/secondary"
-        android:paddingHorizontal="30dp"
-        android:layout_marginVertical="20dp"
-        android:textAllCaps="false"
-        android:textStyle="bold"
-        android:textSize="18sp"
-        android:text="@string/validate_cart" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingHorizontal="25dp"
-        android:paddingVertical="15dp"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
-            android:textStyle="bold"
-            android:textSize="22sp"
-            android:text="@string/farm" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:id="@+id/farm_picture" />
-
-            <TextView
-                android:id="@+id/farm_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:textStyle="bold"
-                android:textSize="18sp" />
-
-        </LinearLayout>
-
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:id="@+id/products_list"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:padding="25dp"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
-            android:textStyle="bold"
-            android:textSize="22sp"
-            android:text="@string/products" />
-    </LinearLayout>
+        android:padding="40dp"
+        android:textSize="20sp"
+        android:visibility="gone"
+        android:text="@string/cart_empty" />
 
 </LinearLayout>

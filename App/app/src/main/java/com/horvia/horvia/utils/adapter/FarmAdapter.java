@@ -46,12 +46,14 @@ public class FarmAdapter extends BaseAdapter {
         view = inflater.inflate(R.layout.farms_list, null);
         ImageView imageView = view.findViewById(R.id.farm_list_img);
         TextView nameView = view.findViewById(R.id.farm_list_name);
+        TextView descriptionView = view.findViewById(R.id.farm_list_description);
         RatingBar ratingBar = view.findViewById(R.id.farm_list_rate);
         TextView ratingBarValue = view.findViewById(R.id.farm_rate_list_value);
         TextView ratingBarNumber = view.findViewById(R.id.farm_rate_list_number);
 
         imageView.setImageBitmap(farms.get(i).Picture);
         nameView.setText(farms.get(i).Name);
+        descriptionView.setText(farms.get(i).Description);
         if(farms.get(i).Rate == null){
             LinearLayout layout = view.findViewById(R.id.farms_list_layout);
 

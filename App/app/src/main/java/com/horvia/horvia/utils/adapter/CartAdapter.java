@@ -1,6 +1,7 @@
 package com.horvia.horvia.utils.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,7 +36,7 @@ public class CartAdapter extends BaseAdapter {
     }
 
     @Override
-    public Object getItem(int i) {
+    public Cart getItem(int i) {
         return carts.get(i);
     }
 
@@ -64,13 +65,14 @@ public class CartAdapter extends BaseAdapter {
             productPrice.setText(dc.format((carts.get(i).Product.UnitPrice * carts.get(i).Quantity)) + "€");
         }
         else if(carts.get(i).Product.MeasuringUnit == MeasuringUnit.WEIGHT){
-            if(carts.get(i).Quantity >= 1000){
+            Log.d("quantityWeight", String.valueOf(carts.get(i).Quantity));
+            if(carts.get(i).Quantity >= 1){
                 DecimalFormat dcWeight = new DecimalFormat("#.#");
-                productQuantity.setText("Quantité : " + (dcWeight.format((carts.get(i).Quantity) / 1000)) + "kg");
+                productQuantity.setText("Quantité : " + (dcWeight.format(carts.get(i).Quantity)) + "kg");
             }else{
-                productQuantity.setText("Quantité : " + Math.round(carts.get(i).Quantity) + "g");
+                productQuantity.setText("Quantité : " + Math.round(carts.get(i).Quantity * 1000) + "g");
             }
-            productPrice.setText(dc.format((carts.get(i).Product.UnitPrice * carts.get(i).Quantity / 1000)) + "€");
+            productPrice.setText(dc.format((carts.get(i).Product.UnitPrice * carts.get(i).Quantity)) + "€");
         }
         else{
             productQuantity.setText("Quantité : " + Math.round(carts.get(i).Quantity));

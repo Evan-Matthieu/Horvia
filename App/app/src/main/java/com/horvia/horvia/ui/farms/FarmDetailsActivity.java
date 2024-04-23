@@ -98,7 +98,7 @@ public class FarmDetailsActivity extends AppCompatActivity {
                             productPicture.setImageBitmap(product.Picture);
                             productName.setText(product.Name);
                             productDescription.setText(product.Description);
-                            productUnitType.setText("Prix au " + product.MeasuringUnit.getLabel(getApplicationContext()));
+                            productUnitType.setText(product.MeasuringUnit.getLabel(getApplicationContext()));
                             productPrice.setText(product.UnitPrice + "€");
 
 
@@ -196,6 +196,13 @@ public class FarmDetailsActivity extends AppCompatActivity {
                                 public void onClick(View view) {
                                     double actualQuantity = Double.parseDouble(quantity.getText().toString().split(" ")[0]);
                                     if(actualQuantity > 0){
+                                        Log.d("quantityBefore", String.valueOf(actualQuantity));
+
+                                        if(product.MeasuringUnit == MeasuringUnit.WEIGHT){
+                                            actualQuantity /= 1000;
+                                        }
+
+                                        Log.d("quantityAfter", String.valueOf(actualQuantity));
                                         apiRequest.AddProductToCart(product.Id, actualQuantity, new ApiRequestListener<String>() {
                                             @Override
                                             public void onComplete(@Nullable String entity, String error) {

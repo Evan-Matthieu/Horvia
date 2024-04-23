@@ -37,16 +37,6 @@
             android:src="@drawable/search"
             android:layout_marginHorizontal="8dp"/>
 
-        <ImageButton
-            android:id="@+id/filter_button"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:padding="10dp"
-            android:background="@drawable/rounded_circle"
-            android:backgroundTint="@color/secondary"
-            android:src="@drawable/filter"
-            android:scaleType="fitXY"
-            app:tint="@color/white"/>
     </LinearLayout>
 
 

@@ -8,6 +8,8 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -23,6 +25,7 @@ public class OrdersFragment extends Fragment {
 
     private LinearLayout ordersList;
     private ApiRequest apiRequest;
+    private ImageView backButton;
 
     public OrdersFragment() {
         // Required empty public constructor
@@ -33,8 +36,16 @@ public class OrdersFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_orders, container, false);
         ordersList = view.findViewById(R.id.orders_list);
+        backButton = view.findViewById(R.id.back);
 
         apiRequest = new ApiRequest(getContext());
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().getSupportFragmentManager().popBackStack();
+            }
+        });
 
         apiRequest.GetOrders(new ApiRequestListener<ArrayList<Order>>() {
             @Override
@@ -54,18 +65,6 @@ public class OrdersFragment extends Fragment {
 
                         ordersList.addView(item);
                         Order order = orderAdapter.getItem(i);
-
-                        item.setOnClickListener(view -> {
-                            OrderDetailsFragment fragment = new OrderDetailsFragment();
-                            Bundle args = new Bundle();
-                            args.putInt("id", order.Id);
-                            fragment.setArguments(args);
-
-                            getParentFragmentManager().beginTransaction()
-                                    .replace(R.id.mainContentFragment, fragment)
-                                    .addToBackStack(OrdersFragment.class.toString())
-                                    .commit();
-                        });
                     }
                 }
                 else{

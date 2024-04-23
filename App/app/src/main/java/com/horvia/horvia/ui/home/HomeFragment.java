@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -80,6 +81,7 @@ public class HomeFragment extends Fragment {
                     FarmAdapter farmAdapter = new FarmAdapter(container.getContext(), entity.Items);
 
                     for (int i = 0; i < farmAdapter.getCount(); i++) {
+                        Log.d("description", farmAdapter.getItem(i).Description);
                         View item = farmAdapter.getView(i, null, null);
 
                         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(

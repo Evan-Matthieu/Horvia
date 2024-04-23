@@ -640,7 +640,7 @@ public class ApiRequest {
     }
 
     public void ValidateCart(ApiRequestListener<String> callback) {
-        String url = API_URL + "/action/validateCart.php";
+        String url = API_URL + "/action/createOrders.php";
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(), response -> {
             try {
                 if(response.getBoolean("success")){

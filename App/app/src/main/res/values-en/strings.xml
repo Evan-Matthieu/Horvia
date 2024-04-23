@@ -64,4 +64,5 @@
     <string name="validate_cart">Validate cart</string>
     <string name="product_deleted">Product deleted</string>
     <string name="your_order_has_been_send">Your order has been send</string>
+    <string name="cart_empty">Your cart is empty</string>
 </resources>

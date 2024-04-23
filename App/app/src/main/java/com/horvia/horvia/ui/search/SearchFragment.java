@@ -33,13 +33,13 @@ public class SearchFragment extends Fragment {
     private ApiRequest apiRequest;
 
     private LinearLayout llFarmList;
-    private ImageButton searchButton, filterButton;
+    private ImageButton searchButton;
     private EditText queryEditText;
     private Button seeMoreButton;
     private TextView noFarmFoundTextView;
 
     private String currentQuery = null;
-    private int currentPageSize = 3;
+    private int currentPageSize = 10;
     private int currentPageNumber = 1;
 
     public SearchFragment() {
@@ -66,7 +66,6 @@ public class SearchFragment extends Fragment {
 
         llFarmList = view.findViewById(R.id.farm_list);
         searchButton = view.findViewById(R.id.search_button);
-        filterButton = view.findViewById(R.id.filter_button);
         queryEditText = view.findViewById(R.id.search_query);
         seeMoreButton = view.findViewById(R.id.search_see_more);
         noFarmFoundTextView = view.findViewById(R.id.no_farm_found);
@@ -95,7 +94,7 @@ public class SearchFragment extends Fragment {
 
     private void fetchFarmPaginated(){
         PaginationParams params = new PaginationParams(currentPageSize, currentPageNumber, currentQuery);
-        apiRequest.GetFarms(params,categoriesSelectedId,  new ApiRequestListener<PaginationResult<Farm>>() {
+        apiRequest.GetFarms(params ,categoriesSelectedId,  new ApiRequestListener<PaginationResult<Farm>>() {
             @Override
             public void onComplete(@Nullable PaginationResult<Farm> entity, String error) {
                 if(entity != null){
