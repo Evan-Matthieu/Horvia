@@ -15,6 +15,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.horvia.horvia.R;
 import com.horvia.horvia.models.Cart;
@@ -22,6 +23,9 @@ import com.horvia.horvia.models.Farm;
 import com.horvia.horvia.network.ApiRequest;
 import com.horvia.horvia.network.ApiRequestListener;
 import com.horvia.horvia.ui.farms.FarmDetailsActivity;
+import com.horvia.horvia.ui.profile.OrdersFragment;
+import com.horvia.horvia.ui.profile.PersonnalInformationsFragment;
+import com.horvia.horvia.ui.profile.ProfileFragment;
 import com.horvia.horvia.utils.adapter.CartAdapter;
 import com.horvia.horvia.utils.adapter.ProductAdapter;
 
@@ -74,10 +78,22 @@ public class CartFragment extends Fragment {
 
                         ImageButton deleteCart = contentView.findViewById(R.id.delete_cart);
 
+                        int cartId = Integer.parseInt(String.valueOf(cartAdapter.getItemId(i)));
                         deleteCart.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                // TODO Faire la suppression du produit du panier
+                                apiRequest.DeleteProductToCart(cartId, new ApiRequestListener<String>() {
+                                    @Override
+                                    public void onComplete(@Nullable String entity, String error) {
+                                        if(entity != null){
+                                            Toast.makeText(getContext(), R.string.product_deleted, Toast.LENGTH_LONG).show();
+                                            productsList.removeView(contentView);
+                                        }
+                                        else{
+                                            Toast.makeText(getContext(), R.string.error_occured, Toast.LENGTH_LONG).show();
+                                        }
+                                    }
+                                });
                             }
                         });
 
@@ -90,7 +106,21 @@ public class CartFragment extends Fragment {
         validateCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO : Validate Cart
+                apiRequest.ValidateCart(new ApiRequestListener<String>() {
+                    @Override
+                    public void onComplete(@Nullable String entity, String error) {
+                        if(entity != null){
+                            getParentFragmentManager().beginTransaction()
+                                    .replace(R.id.mainContentFragment, new OrdersFragment())
+                                    .addToBackStack(null)
+                                    .commit();
+                            Toast.makeText(getContext(), R.string.validate_cart, Toast.LENGTH_LONG).show();
+                        }
+                        else{
+                            Toast.makeText(getContext(), R.string.error_occured, Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
             }
         });
 

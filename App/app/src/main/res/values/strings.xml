@@ -62,5 +62,7 @@
     <string name="farm">Ferme</string>
     <string name="products">Produits</string>
     <string name="validate_cart">Valider le panier</string>
+    <string name="product_deleted">Produit supprimé</string>
+    <string name="your_order_has_been_send">Votre commande a été envoyée</string>
 
 </resources>

@@ -554,6 +554,37 @@ public class ApiRequest {
         _databaseManager.queue.add(jsonObjectRequest);
     }
 
+    public void DeleteProductToCart(int cartId , ApiRequestListener<String> callback) {
+        String url = API_URL + "/action/deleteProductOnCart.php?id=" + cartId;
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, new JSONObject(), response -> {
+            try {
+                Log.d("responseDelete", response.toString());
+                if(response.getBoolean("success")){
+                    callback.onComplete("", null);
+                }
+                else{
+                    callback.onComplete(null, response.getString("error"));
+                }
+
+            } catch (JSONException e) {
+                callback.onComplete(null, _context.getResources().getString(R.string.error_occured));
+                e.printStackTrace();
+            }
+        }, error -> {
+            callback.onComplete(null, _context.getResources().getString(R.string.retry_later));
+        }) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + _jwtToken);
+                return headers;
+            }
+        };
+        _databaseManager.queue.add(jsonObjectRequest);
+    }
+
+
+
     public void GetCartProducts(ApiRequestListener<ArrayList<Cart>> callback) {
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, API_URL + "/action/getCart.php", new JSONObject(), response -> {
@@ -586,6 +617,34 @@ public class ApiRequest {
                     }
 
                     callback.onComplete(carts, null);
+                }
+                else{
+                    callback.onComplete(null, response.getString("error"));
+                }
+
+            } catch (JSONException e) {
+                callback.onComplete(null, _context.getResources().getString(R.string.error_occured));
+                e.printStackTrace();
+            }
+        }, error -> {
+            callback.onComplete(null, _context.getResources().getString(R.string.retry_later));
+        }) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + _jwtToken);
+                return headers;
+            }
+        };
+        _databaseManager.queue.add(jsonObjectRequest);
+    }
+
+    public void ValidateCart(ApiRequestListener<String> callback) {
+        String url = API_URL + "/action/validateCart.php";
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(), response -> {
+            try {
+                if(response.getBoolean("success")){
+                    callback.onComplete("", null);
                 }
                 else{
                     callback.onComplete(null, response.getString("error"));
