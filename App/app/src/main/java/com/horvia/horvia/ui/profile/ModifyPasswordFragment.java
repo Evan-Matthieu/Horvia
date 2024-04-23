@@ -23,6 +23,7 @@ public class ModifyPasswordFragment extends Fragment {
 
     private EditText currentPassword, newPassword, newPasswordConfirm;
     private Button submitPasswordModify;
+    private Button backButton;
 
     public ModifyPasswordFragment() {
         // Required empty public constructor
@@ -38,6 +39,7 @@ public class ModifyPasswordFragment extends Fragment {
         newPassword = view.findViewById(R.id.new_password);
         newPasswordConfirm = view.findViewById(R.id.new_password_confirm);
         submitPasswordModify = view.findViewById(R.id.submit_modify_password);
+        backButton = view.findViewById(R.id.cancel);
 
         apiRequest = new ApiRequest(getContext());
 
@@ -72,6 +74,13 @@ public class ModifyPasswordFragment extends Fragment {
                     });
                 }
 
+            }
+        });
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().getSupportFragmentManager().popBackStack();
             }
         });
 

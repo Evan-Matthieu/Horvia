@@ -135,9 +135,9 @@ public class FarmDetailsActivity extends AppCompatActivity {
 
                                     double actualQuantity = Double.parseDouble(quantity.getText().toString().split(" ")[0]);
 
-                                    if(product.MeasuringUnit == MeasuringUnit.WEIGHT && actualQuantity < 1000){
+                                    if(product.MeasuringUnit == MeasuringUnit.WEIGHT && actualQuantity < 20000){
                                         actualQuantity += 100;
-                                        quantity.setText(actualQuantity + " g");
+                                        quantity.setText(Math.round(actualQuantity) + " g");
 
                                         String totalPriceValue = dc.format((double) actualQuantity / 1000 * product.UnitPrice);
                                         totalPrice.setText(totalPriceValue + "€");
@@ -169,7 +169,7 @@ public class FarmDetailsActivity extends AppCompatActivity {
 
                                     if(product.MeasuringUnit == MeasuringUnit.WEIGHT && actualQuantity > 0){
                                         actualQuantity -= 100;
-                                        quantity.setText(actualQuantity + " g");
+                                        quantity.setText(Math.round(actualQuantity) + " g");
 
                                         String totalPriceValue = dc.format(actualQuantity / 100000 * product.UnitPrice);
                                         totalPrice.setText(totalPriceValue + "€");

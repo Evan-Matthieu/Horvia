@@ -21,5 +21,6 @@ public class Product {
     public float UnitPrice;
     public MeasuringUnit MeasuringUnit;
     public Category Category;
+    public Farm Farm;
     public Bitmap Picture;
 }

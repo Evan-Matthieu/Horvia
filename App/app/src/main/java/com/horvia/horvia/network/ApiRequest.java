@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 import com.android.volley.Request;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.horvia.horvia.R;
+import com.horvia.horvia.models.Cart;
 import com.horvia.horvia.models.Category;
 import com.horvia.horvia.models.Civility;
 import com.horvia.horvia.models.Location;
@@ -553,5 +554,58 @@ public class ApiRequest {
         _databaseManager.queue.add(jsonObjectRequest);
     }
 
+    public void GetCartProducts(ApiRequestListener<ArrayList<Cart>> callback) {
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, API_URL + "/action/getCart.php", new JSONObject(), response -> {
+            try {
+                if(response.getBoolean("success")){
+                    JSONArray entity = response.getJSONArray("entity");
+                    ArrayList<Cart> carts = new ArrayList<>();
+
+                    for(int i = 0; i < entity.length(); i++) {
+                        JSONObject object = entity.getJSONObject(i);
+
+                        Farm farm = new Farm();
+                        farm.Name = object.getString("farmName");
+                        farm.Picture = BitmapUtil.StringToBitmap(object.getString("farmPicture"));
+
+                        Product product = new Product();
+                        product.Name = object.getString("productName");
+                        product.Picture = BitmapUtil.StringToBitmap(object.getString("productPicture"));
+                        product.UnitPrice = Float.parseFloat(object.getString("productPrice"));
+                        product.MeasuringUnit = MeasuringUnit.valueOf(object.getString("productMeasuringUnit"));
+                        product.Farm = farm;
+
+                        Cart cart = new Cart();
+                        cart.Id = object.getInt("id");
+                        cart.Quantity = object.getDouble("quantity");
+                        cart.Product = product;
+
+
+                        carts.add(cart);
+                    }
+
+                    callback.onComplete(carts, null);
+                }
+                else{
+                    callback.onComplete(null, response.getString("error"));
+                }
+
+            } catch (JSONException e) {
+                callback.onComplete(null, _context.getResources().getString(R.string.error_occured));
+                e.printStackTrace();
+            }
+        }, error -> {
+            callback.onComplete(null, _context.getResources().getString(R.string.retry_later));
+        }) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + _jwtToken);
+                return headers;
+            }
+        };
+        _databaseManager.queue.add(jsonObjectRequest);
+    }
 
 }

@@ -4,7 +4,7 @@
     <string name="home">home</string>
     <string name="profile">profil</string>
     <string name="search">search</string>
-    <string name="cart">cart</string>
+    <string name="cart">Cart</string>
     <string name="to_login">login</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
@@ -59,4 +59,7 @@
     <string name="price_litre">Price per litre</string>
     <string name="cancel">Cancel</string>
     <string name="product_add_to_cart">Product added to cart</string>
+    <string name="farm">Farm</string>
+    <string name="products">Products</string>
+    <string name="validate_cart">Validate cart</string>
 </resources>
