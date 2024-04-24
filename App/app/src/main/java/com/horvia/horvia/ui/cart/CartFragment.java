@@ -144,7 +144,7 @@ public class CartFragment extends Fragment {
                                     .commit();
                         }
                         else{
-                            Toast.makeText(getContext(), R.string.error_occured, Toast.LENGTH_LONG).show();
+                            Toast.makeText(getContext(), error, Toast.LENGTH_LONG).show();
                         }
                     }
                 });
