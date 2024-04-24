@@ -64,7 +64,6 @@ public class OrdersFragment extends Fragment {
                         item.setLayoutParams(layoutParams);
 
                         ordersList.addView(item);
-                        Order order = orderAdapter.getItem(i);
                     }
                 }
                 else{

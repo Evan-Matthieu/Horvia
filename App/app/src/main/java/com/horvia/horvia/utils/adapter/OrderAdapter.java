@@ -12,6 +12,8 @@ import com.horvia.horvia.R;
 import com.horvia.horvia.models.Farm;
 import com.horvia.horvia.models.Order;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class OrderAdapter extends BaseAdapter {
@@ -55,7 +57,10 @@ public class OrderAdapter extends BaseAdapter {
         orderId.setText("N° " + orders.get(i).Id);
         status.setText("Status : " + orders.get(i).Status.getLabel(context));
         farmName.setText(orders.get(i).Farm.Name);
-        totalPrice.setText(orders.get(i).TotalPrice + "€");
+
+        DecimalFormat dc = new DecimalFormat("#.##");
+        dc.setRoundingMode(RoundingMode.UP);
+        totalPrice.setText(dc.format(orders.get(i).TotalPrice) + "€");
 
         return view;
     }

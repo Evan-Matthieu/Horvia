@@ -31,6 +31,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:gravity="center_horizontal"
         android:visibility="gone"
         android:id="@+id/order_details" >
 
@@ -40,6 +41,7 @@
             android:layout_height="wrap_content"
             android:backgroundTint="@color/secondary"
             android:paddingHorizontal="30dp"
+            android:layout_margin="15dp"
             android:textAllCaps="false"
             android:textStyle="bold"
             android:textSize="18sp"

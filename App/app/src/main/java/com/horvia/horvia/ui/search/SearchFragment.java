@@ -54,7 +54,6 @@ public class SearchFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d("categoryIdArguments",String.valueOf(getArguments().getInt("categoryId")));
         if (getArguments() != null) {
             if(getArguments().get("categoryId") != null){
                 categoryId = getArguments().getInt("categoryId");

@@ -310,6 +310,7 @@ public class ApiRequest {
             }
         }, error -> {
             callback.onComplete(null, String.valueOf(error));
+            Log.d("volleyError", String.valueOf(error));
         }) {
             @Override
             public Map<String, String> getHeaders() {
